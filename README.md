@@ -1,2 +1,0 @@
-# dicta
-read
