@@ -130,12 +130,10 @@
                         <td>
                             <input type="radio" name="ViewModeGroup" ng-model="tab" value="1" />
                             Display Text
-                            <button ng-show="false" class="button padding_5 radius" ng-click="tab = '1'">Text</button>
                         </td>
                         <td>
-                            <input style="margin-left:25px;" type="radio" name="ViewModeGroup" ng-model="tab" value="2" />
+                            <input style="margin-left:25px;" type="radio" name="ViewModeGroup" ng-model="tab" value="2" ng-click="updateCurrentFeatureList()" />
                             Display Features
-                            <button ng-show="false" class="button padding_5 radius" ng-click="tab = '2'">Features</button>
                         </td>
                     </tr>
                 </table>
@@ -186,7 +184,7 @@
                    
                         <div ng-repeat="oneclass in resultData.classes">
                             <span style="margin-left:15px; font-size:22px; color:{{resultData.colors[$index]}};">{{oneclass}}</span><span style="margin-left:10px; font-size:22px;">Represented indicators</span>
-                            <table class="mytable width_100_percent margin_15" max-height="200" fixed-header>
+                            <table class="mytable" max-height="200" fixed-header>
                                 <thead>
                                     <tr>
                                         <th style="font-size:11px;" title="Feature Name"><a style="font-size:11px;" href="" ng-click="test_predicate = 'name'; reverse=!reverse;">Feature</a></th>
@@ -226,7 +224,7 @@
                             </table>
                             <br />
                             <span style="margin-left:15px; font-size:22px; color:{{resultData.colors[$index]}};">{{oneclass}}</span><span style="margin-left:10px; font-size:22px;">Missing indicators</span>
-                            <table class="mytable width_100_percent margin_15" max-height="200" fixed-header>
+                            <table class="mytable" max-height="200" fixed-header>
                                 <thead>
                                     <tr>
                                         <th style="font-size:11px;" title="Feature Name"><a style="font-size:11px;" href="" ng-click="test_predicate = 'name'; reverse=!reverse;">Feature</a></th>

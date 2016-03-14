@@ -8,7 +8,7 @@
     $scope.NewExperiment = function () {
         ExperimentService.NewExperiment();
     }
-
+    
     $scope.GoToClassification = function () {
         ExperimentService.updateResultData([]);
         $location.path('TestSet');
@@ -31,7 +31,21 @@
 
     $scope.Feature_sets = ExperimentService.Feature_sets;
     $scope.featuresData = ExperimentService.featuresData;
-    
+    $scope.updateCurrentFeatureList = function () {
+        
+        $scope.data = {};
+        $scope.data.userLogin = ExperimentService.user;
+        $scope.data.index = $scope.currentIndex;
+        APIService.apiRun({ crud: 'TestFileData' }, $scope.data, function (response) {
+            var results = response;
+            $scope.currentTestFileText = $sce.trustAsHtml(results.htmlText);
+            $scope.legend = $sce.trustAsHtml(results.legend);
+            $scope.currentFeatureList = results.features;
+        });
+        
+    }
+
+
     $scope.numberOfAppearancesInDoc = function (item) {
         return (item.numberOfAppearancesInDoc > 0);
     };
@@ -84,7 +98,7 @@
         $scope.data = {};
         $scope.data.userLogin = ExperimentService.user;
         $scope.data.index = item.index;
-     
+        $scope.currentIndex = item.index;
         APIService.apiRun({ crud: 'TestFileData' }, $scope.data, function (response) {
             InProgressService.updateIsReady(1);
             var results = response;

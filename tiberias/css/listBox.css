@@ -27,8 +27,41 @@
     background-color: #B1FAFA;
 }
 
-.mytable, .mytable th, .mytable td {border: 1px solid black;border-collapse: collapse;}
+
 .currentPage {
     font-size:20px;
     color: green;
+}
+
+.mytable{
+	cursor:pointer;
+    border: none;
+	//width: 60px;
+	//height: 320px;
+}
+
+.mytable td {
+    width: 60px;
+	min-width: 60px;
+	max-width: 180px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	padding:5px;
+}
+
+.mytable th {
+	padding:5px;
+    width: 60px;
+	min-width: 60px;
+	max-width: 180px;
+}
+
+.mytable, .mytable th, .mytable td {
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+
+.fix-border {
+  border: none;
 }
