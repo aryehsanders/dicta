@@ -1,5 +1,7 @@
 ﻿jTextMinerApp.controller('ResultsClassificationTestSetController', function ($scope, ExperimentService, APIService, $sce, $location, AlertsService, ClassificationService, InProgressService, ClassService) {
 
+    $scope.tab = '1';
+
     AlertsService.determineAlert({ msg: 'Here are the results, you may start new experiment by clicking on "New experiment" button', type: 'success' });
 
     if (ExperimentService.isNewExperiment)
@@ -31,8 +33,15 @@
 
     $scope.Feature_sets = ExperimentService.Feature_sets;
     $scope.featuresData = ExperimentService.featuresData;
+
+    $scope.updateCurrentFeatureListToEmpty = function () {
+
+        $scope.currentFeatureList = [];
+    }
     $scope.updateCurrentFeatureList = function () {
         
+        $scope.currentFeatureList = $scope.tempFeatureList;
+/*
         $scope.data = {};
         $scope.data.userLogin = ExperimentService.user;
         $scope.data.index = $scope.currentIndex;
@@ -42,7 +51,7 @@
             $scope.legend = $sce.trustAsHtml(results.legend);
             $scope.currentFeatureList = results.features;
         });
-        
+ */       
     }
 
 
@@ -104,8 +113,15 @@
             var results = response;
             $scope.currentTestFileText = $sce.trustAsHtml(results.htmlText);
             $scope.legend = $sce.trustAsHtml(results.legend);
-            $scope.currentFeatureList = results.features;
-            
+
+            $scope.tempFeatureList = results.features;
+            if ($scope.tab === '1')
+                $scope.currentFeatureList = [];
+            else
+            {
+                if ($scope.tab === '2')
+                    $scope.currentFeatureList = $scope.tempFeatureList;
+            }
         });
 
         $scope.inited = true;

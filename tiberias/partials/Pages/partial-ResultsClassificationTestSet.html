@@ -125,10 +125,10 @@
                     The column maked "Influence" indicates the importance of the feature in classifying the selected test document. <br />
                     <br />
                 </span>
-                <table ng-init="tab = 2">
+                <table>
                     <tr>
                         <td>
-                            <input type="radio" name="ViewModeGroup" ng-model="tab" value="1" />
+                            <input type="radio" name="ViewModeGroup" ng-model="tab" value="1" ng-click="updateCurrentFeatureListToEmpty()" />
                             Display Text
                         </td>
                         <td>
