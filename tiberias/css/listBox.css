@@ -33,13 +33,6 @@
     color: green;
 }
 
-.mytable{
-	cursor:pointer;
-    border: none;
-	//width: 60px;
-	//height: 320px;
-}
-
 .mytable td {
     width: 60px;
 	min-width: 60px;
@@ -60,6 +53,10 @@
 .mytable, .mytable th, .mytable td {
 	border: 1px solid black;
 	border-collapse: collapse;
+}
+
+.mytable{
+    border: none;
 }
 
 .fix-border {

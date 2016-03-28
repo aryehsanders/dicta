@@ -39,7 +39,7 @@ jTextMinerApp.directive('ngEnter', function () {
 });
 
 //http://stackoverflow.com/questions/14833326/how-to-set-focus-on-input-field
-jTextMinerApp.directive('autoFocus', function ($timeout) {
+jTextMinerApp.directive('autoFocus', function ($timeout) { // not in use
     return {
         restrict: 'AC',
         link: function (_scope, _element) {

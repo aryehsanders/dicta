@@ -204,7 +204,7 @@
                                 </thead>
                                 <tbody>
                                     <!-- http://stackoverflow.com/questions/16227325/how-do-i-call-an-angular-js-filter-with-multiple-arguments -->
-                                    <tr ng-repeat="feature in currentFeatureList | orderBy:'-influence' | orderBy:test_predicate:reverse | positiveInfluence: $index">
+                                    <tr ng-repeat="feature in currentFeatureList | orderBy:test_predicate:reverse | orderBy:'-influence' | positiveInfluence: $index">
                                         <td><span title="{{feature.title}}" class="{{feature.backgroundColorForFeatureInfulence}}">{{feature.name}}</span></td>
                                         <td>{{feature.numberOfAppearancesInDoc | number: 0}}</td>
                                         <td>{{feature.freqInDoc  | number : 2}}</td>
@@ -216,7 +216,7 @@
                                         <td>
                                             {{feature.tTestForEachClass[oneclass] | number : 2}}
                                         </td>
-                                        <td>
+                                        <td title="Influence = {{selectedTestFile.length}} * {{feature.tTestForEachClass[oneclass] | number : 2}} * ({{feature.freqInDoc | number : 2}}/100-{{(feature.freqInOthers + feature.averageForEachClass[oneclass])/2 | number : 2}}/100)">
                                             <span class="{{feature.backgroundColorForFeatureValue}}">{{feature.influence | number : 2}}</span>
                                         </td>
                                     </tr>
@@ -242,9 +242,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="feature in currentFeatureList | orderBy:'influence' | orderBy:test_predicate:reverse | negativeInfluence: $index">
-                                        <td><span class="{{feature.backgroundColorForFeatureInfulence}}">{{feature.name}}</span></td>
-                                        <td>{{feature.numberOfAppearancesInDoc | number: 0}}</td>
+                                    <tr ng-repeat="feature in currentFeatureList | orderBy:test_predicate:reverse | orderBy:'influence' | negativeInfluence: $index">
+                                        <td><span title="{{feature.title}}" class="{{feature.backgroundColorForFeatureInfulence}}">{{feature.name}}</span></td>
+                                        <td>{{feature.numberOfAppearancesInDoc}}</td>
                                         <td>{{feature.freqInDoc | number : 2}}</td>
                                         <td>
                                             {{feature.averageForEachClass[oneclass] | number : 2}}
@@ -254,7 +254,7 @@
                                         <td>
                                             {{feature.tTestForEachClass[oneclass] | number : 2}}
                                         </td>
-                                        <td>
+                                        <td title="Influence = {{selectedTestFile.length}} * {{feature.tTestForEachClass[oneclass] | number : 2}} * ({{feature.freqInDoc | number : 2}}/100-{{(feature.freqInOthers + feature.averageForEachClass[oneclass])/2 | number : 2}}/100)">
                                             <span class="{{feature.backgroundColorForFeatureValue}}">{{feature.influence | number : 2}}</span>
                                         </td>
                                     </tr>

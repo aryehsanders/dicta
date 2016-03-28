@@ -42,7 +42,7 @@ jTextMinerApp.factory("APIService", function ($resource) {
         }
     );
 });
-jTextMinerApp.factory('ExperimentService', function ($rootScope, ClassificationService, SegmentationService, FeatureService, APIService, $location) {
+jTextMinerApp.factory('ExperimentService', function ($rootScope, ClassificationService, SegmentationService, FeatureService, APIService, $location, InProgressService, ClassService) {
     var service = {};
 
     service.baseUrl = "http://ec2-52-58-29-166.eu-central-1.compute.amazonaws.com:80/WebServiceJTextMinerNewRoot2/api/JTextMinerAPI";
@@ -121,19 +121,19 @@ jTextMinerApp.factory('ExperimentService', function ($rootScope, ClassificationS
         this.data.selectedAlgorithmTypeAttributes = this.selectedAlgorithmTypeAttributes;
         this.data.classificationExperimentMode = ClassificationService.Classification_ExperimentType;
         this.data.classificationCrossValidationFolds = ClassificationService.Classification_CrossValidationFolds;
-        this.data.corpusMaxId = this.Corpus_maxId;
+        this.data.corpusMaxId = ClassService.Corpus_maxId;
 
         this.data.featureSets = FeatureService.Feature_sets;
-        this.data.corpusClasses = this.Corpus_classes;
+        this.data.corpusClasses = ClassService.Corpus_classes;
 
         this.data.featuresData = FeatureService.featuresData;
     }
 
     service.SaveExperiment = function () {
-        this.updateIsReady(0);
+        InProgressService.updateIsReady(0);
         this.UpdateData();
         APIService.apiRun({ crud: 'SaveClassification' }, this.data, function (response) {
-            service.updateIsReady(1);
+            InProgressService.updateIsReady(1);
             var results = response;
         });
     };
