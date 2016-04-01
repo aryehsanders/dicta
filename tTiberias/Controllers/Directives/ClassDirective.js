@@ -8,6 +8,8 @@ jTextMinerApp.directive('trainingClasses', function () {
             showDeleteButton: '=showDeleteButton'
         },
         controller: ['$scope', 'ExperimentService', 'APIService', 'FeatureService', 'ClassService', 'InProgressService', function ($scope, ExperimentService, APIService, FeatureService, ClassService, InProgressService) {
+            $scope.colors = ['Red', 'Green', 'Blue'];
+
             $scope.classes = ClassService.Corpus_classes;
             $scope.$on('Corpus_classesValueUpdated', function () {
                 $scope.classes = ClassService.Corpus_classes;

@@ -1,6 +1,6 @@
 ﻿
 <div ng-show="classes.length" class="border">
-    <div ng-repeat="item in classes" id="{{item.id}}">
+    <div ng-repeat="item in classes" id="{{item.id}}" class="{{colors[$index]}}">
         <img src="images/done.png" />&nbsp;<span title="{{item.selectedText | limitTo: 1200}}...">{{item.title}}, </span>
         {{item.numberOfChunks}}
         <span ng-show="item.chunkMode=='DoNotChunk'">documents (unchunked)</span>
