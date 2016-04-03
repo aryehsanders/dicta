@@ -1,5 +1,5 @@
 ﻿// create the controller and inject Angular's $scope
-jTextMinerApp.controller('TabsController', function ($scope, ExperimentService, $location, focus, APIService, $filter, AlertsService, ClassificationService, FeatureService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce) {
+jTextMinerApp.controller('TabsController', function ($scope, ExperimentService, $location, focus, APIService, $filter, AlertsService, ClassificationService, FeatureService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce, ngDialog) {
 
     if (ExperimentService.user == 'none')
         $location.path('Login');
@@ -37,7 +37,7 @@ jTextMinerApp.controller('TabsController', function ($scope, ExperimentService, 
         $scope.ExperimentMode = 'NewExperiment';
         $scope.NextToNew();
     }
-
+    $scope.NewExperimentName = ExperimentService.NewExperimentName;
     $scope.NextToNew = function () {
         if ($scope.ExperimentMode == 'NewExperiment' && $scope.NewExperimentName.length == 0)
             AlertsService.determineAlert({ msg: 'Please give a name for new experiment.', type: 'danger' });
@@ -67,7 +67,7 @@ jTextMinerApp.controller('TabsController', function ($scope, ExperimentService, 
 
                         if (response.userLogin.length != 0) {
                             AlertsService.determineAlert({ msg: 'NewExperiment', type: 'success' });
-                            $location.path($scope.ExperimentTypeModel);
+                            //$location.path($scope.ExperimentTypeModel);
                         }
                         else
                             AlertsService.determineAlert({ msg: 'There is such exp name', type: 'success' });
@@ -89,7 +89,7 @@ jTextMinerApp.controller('TabsController', function ($scope, ExperimentService, 
                         $scope.UpdateExtractFeaturesData();
                         APIService.apiRun({ crud: 'Extract' }, $scope.data, function (response) {
                             var results = response;
-                            $location.path($scope.ExperimentTypeModel);
+                            //$location.path($scope.ExperimentTypeModel);
                         });
 
                     });
@@ -99,7 +99,20 @@ jTextMinerApp.controller('TabsController', function ($scope, ExperimentService, 
         }
     }
 
-   
+    $scope.UpdateExtractFeaturesData = function () {
+        $scope.data = {};
+        $scope.data.userLogin = ExperimentService.user;
+        $scope.data.expType = ExperimentService.ExperimentTypeModel;
+
+
+        $scope.data.expName = ExperimentService.ExperimentName;
+
+        $scope.data.featureSets = FeatureService.Feature_sets;
+        $scope.data.corpusClasses = ClassService.Corpus_classes;
+
+        $scope.data.featuresData = FeatureService.featuresData;
+
+    }
 
    
     $scope.UpdateDataForNewExperiment = function (data) {
@@ -119,20 +132,7 @@ jTextMinerApp.controller('TabsController', function ($scope, ExperimentService, 
 
         FeatureService.updateFeaturesData(data.featuresData);
     }
-    $scope.UpdateExtractFeaturesData = function () {
-        $scope.data = {};
-        $scope.data.userLogin = ExperimentService.user;
-        $scope.data.expType = ExperimentService.ExperimentTypeModel;
-
-
-        $scope.data.expName = ExperimentService.ExperimentName;
-
-        $scope.data.featureSets = FeatureService.Feature_sets;
-        $scope.data.corpusClasses = ClassService.Corpus_classes;
-
-        $scope.data.featuresData = FeatureService.featuresData;
-
-    }
+    
 
 
     // Bible
@@ -205,20 +205,7 @@ jTextMinerApp.controller('TabsController', function ($scope, ExperimentService, 
     }
 
 
-    $scope.UpdateExtractFeaturesData = function () {
-        $scope.data = {};
-        $scope.data.userLogin = ExperimentService.user;
-        $scope.data.expType = ExperimentService.ExperimentTypeModel;
-
-
-        $scope.data.expName = ExperimentService.ExperimentName;
-
-        $scope.data.featureSets = FeatureService.Feature_sets;
-        $scope.data.corpusClasses = ClassService.Corpus_classes;
-
-        $scope.data.featuresData = FeatureService.featuresData;
-
-    }
+ 
     $scope.ContinueToResult = function () {
         if (!$scope.featuresData || !$scope.featuresData.features || $scope.featuresData.features.length == 0) {
             InProgressService.updateIsReady(0);
@@ -237,27 +224,52 @@ jTextMinerApp.controller('TabsController', function ($scope, ExperimentService, 
         }
     }
     $scope.NextToResult = function () {
-        $scope.Classification_ExperimentType = 'CV';
-        ClassificationService.updateClassification_ExperimentTypeValue($scope.Classification_ExperimentType);
-        if ($scope.Classification_ExperimentType == 'TestSet')
-            $location.path('TestSet');
-        else {
-            AlertsService.determineAlert({ msg: 'Check validation', type: 'success' });
-            InProgressService.updateIsReady(0);
-            $scope.UpdateDataForGettingResult();
-
-            APIService.apiRun({ crud: 'RunClassification' }, $scope.data, function (response) {
-                $scope.Classification_ExperimentType = 'TestSet';
-                ClassificationService.updateClassification_ExperimentTypeValue($scope.Classification_ExperimentType);
-                $scope.CVResultData = response;
-                $scope.UpdateDataForGettingResult();
-                APIService.apiRun({ crud: 'RunClassification' }, $scope.data, function (response2) {
-                    InProgressService.updateIsReady(1);
-                    $scope.TSResultData = response2;
-                    $scope.setSelectedTestFile($scope.TSResultData.testSetResults[0], 0);
-                });
-            });
+        //UnknownTestClass
+        var classData = SaveClassInterface; // {};
+        InProgressService.updateIsReady(0);
+        if (angular.equals(classData.actionMode, 'SelectOnlineCorpus')) {
+            classData.select_RootKeys = SelectClassService.lastTestSetSelectedRootKeys;
         }
+
+        classData.expType = 'Segmentation';
+        APIService.apiRun({ crud: 'UnknownTestClass' }, classData, function (response) {
+            classData.expType = 'Classification';
+            APIService.apiRun({ crud: 'UnknownTestClass' }, classData, function (response) {
+                InProgressService.updateIsReady(1);
+                var results = response;
+                $scope.unknownClasses.splice(0, 1);
+                $scope.addUnknownClass(1, results.browse_ClassName, results.selectedText, results.browse_ChunkMode, results.browse_MinimumChunkSize, results.numberOfChunks);
+                ClassService.TestSet_unknown_class = $scope.unknownClasses;
+
+                //CV
+                $scope.Classification_ExperimentType = 'CV';
+                ClassificationService.updateClassification_ExperimentTypeValue($scope.Classification_ExperimentType);
+
+                AlertsService.determineAlert({ msg: 'Check validation', type: 'success' });
+                InProgressService.updateIsReady(0);
+                $scope.UpdateDataForGettingResult();
+
+                APIService.apiRun({ crud: 'RunClassification' }, $scope.data, function (response) {
+                    //Test set
+                    $scope.Classification_ExperimentType = 'TestSet';
+                    ClassificationService.updateClassification_ExperimentTypeValue($scope.Classification_ExperimentType);
+                    $scope.CVResultData = response;
+                    $scope.UpdateDataForGettingResult();
+                    APIService.apiRun({ crud: 'RunClassification' }, $scope.data, function (response2) {
+                        InProgressService.updateIsReady(1);
+                        $scope.TSResultData = response2;
+                        $scope.setSelectedTestFile($scope.TSResultData.testSetResults[0], 0);
+                    });
+                });
+
+
+            });
+
+        });
+
+
+        
+        
     }
 
     $scope.UpdateDataForGettingResult = function () {
@@ -295,7 +307,17 @@ jTextMinerApp.controller('TabsController', function ($scope, ExperimentService, 
 
     });
 
-
+    $scope.unknownClasses = ClassService.TestSet_unknown_class;
+    $scope.addUnknownClass = function (index, newItemName, text, mode, size, number) {
+        $scope.unknownClasses.push({
+            id: index,
+            title: newItemName,
+            selectedText: text,
+            chunkMode: mode,
+            chunkSize: size,
+            numberOfChunks: number
+        });
+    }
 
     //TEST SET
     $scope.textAlign = 'left';
@@ -307,11 +329,11 @@ jTextMinerApp.controller('TabsController', function ($scope, ExperimentService, 
     $scope.featuresData = ExperimentService.featuresData;
 
     $scope.updateCurrentFeatureListToEmpty = function () {
-
+        $scope.tab = 1;
         $scope.currentFeatureList = [];
     }
     $scope.updateCurrentFeatureList = function () {
-
+        $scope.tab = 2;
         $scope.currentFeatureList = $scope.tempFeatureList;
         /*
                 $scope.data = {};
@@ -395,4 +417,47 @@ jTextMinerApp.controller('TabsController', function ($scope, ExperimentService, 
     };
     $scope.tab = '1';
     
+
+    // advanced  - algorithems
+    $scope.OpenSelectAlgorithm = function () {
+        ngDialog.openConfirm({
+            template: 'partials/Dialogs/partial-Algorithm.html',
+            controller: 'AlgorithmDialogController',
+            className: 'ngdialog-theme-plain',
+            scope: $scope
+        }).then(function (value) {
+            console.log('Modal promise resolved. Value: ', value);
+        }, function (reason) {
+            console.log('Modal promise rejected. Reason: ', reason);
+        });
+    };
+    $scope.algorithms = ExperimentService.algorithms;
+    $scope.selectedAlgorithmType = ExperimentService.algorithms[ExperimentService.selectedAlgorithmTypeId];
+    $scope.selectedAlgorithmTypeName = ExperimentService.selectedAlgorithmTypeName;
+    $scope.$on('selectedAlgorithmTypebroadcast', function () {
+        $scope.selectedAlgorithmType = ExperimentService.algorithms[ExperimentService.selectedAlgorithmTypeId];
+        $scope.selectedAlgorithmTypeName = ExperimentService.selectedAlgorithmTypeName;
+
+    });
+
+
+    // feature dialog
+    $scope.featuresData = FeatureService.featuresData;
+
+    $scope.$on('featuresDataUpdated', function () {
+        $scope.featuresData = FeatureService.featuresData;
+    });
+
+    $scope.OpenSelectFeatureSet = function () {
+        ngDialog.openConfirm({
+            template: 'partials/Dialogs/partial-FeatureSet.html',
+            controller: 'FeatureSetDialogController',
+            className: 'ngdialog-theme-default',
+            scope: $scope
+        }).then(function (value) {
+            console.log('Modal promise resolved. Value: ', value);
+        }, function (reason) {
+            console.log('Modal promise rejected. Reason: ', reason);
+        });
+    };
 });

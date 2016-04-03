@@ -28,6 +28,7 @@
         $rootScope.$broadcast("lastSelectedRootKeysUpdated");
     });
 
+    service.lastTestSetSelectedRootKeys = [];
     
     return service;
 });

@@ -101,7 +101,8 @@ jTextMinerApp.controller('ExperimentController', function ($scope, ExperimentSer
 
                         if (response.userLogin.length != 0) {
                             AlertsService.determineAlert({ msg: 'NewExperiment', type: 'success' });
-                            $location.path($scope.ExperimentTypeModel);
+                            //$location.path($scope.ExperimentTypeModel);
+                            $location.path('Tabs');
                         }
                         else
                             AlertsService.determineAlert({ msg: 'There is such exp name', type: 'success' });
@@ -124,7 +125,8 @@ jTextMinerApp.controller('ExperimentController', function ($scope, ExperimentSer
                         $scope.UpdateExtractFeaturesData();
                         APIService.apiRun({ crud: 'Extract' }, $scope.data, function (response) {
                             var results = response;
-                            $location.path($scope.ExperimentTypeModel);
+                            //$location.path($scope.ExperimentTypeModel);
+                            $location.path('Tabs');
                         });
                         
                     });
@@ -185,42 +187,10 @@ jTextMinerApp.controller('ExperimentController', function ($scope, ExperimentSer
 
     }
 
-    $scope.unknownClasses = ClassService.TestSet_unknown_class;
-    $scope.addUnknownClass = function (index, newItemName, text, mode, size, number) {
-        $scope.unknownClasses.push({
-            id: index,
-            title: newItemName,
-            selectedText: text,
-            chunkMode: mode,
-            chunkSize: size,
-            numberOfChunks: number
-        });
-    }
+    
     $scope.saveClass = function () {
-
+        SelectClassService.lastTestSetSelectedRootKeys = SelectClassService.lastSelectedRootKeys;
         $scope.Next();
-
-        $scope.showClassDialog = false;
-        var classData = SaveClassInterface; // {};
-        
-        InProgressService.updateIsReady(0);
-
-        if (angular.equals(classData.actionMode, 'SelectOnlineCorpus')) {
-            classData.select_RootKeys = SelectClassService.lastSelectedRootKeys;
-        }
-        classData.expType = 'Segmentation';
-        APIService.apiRun({ crud: 'UnknownTestClass' }, classData, function (response) {
-            classData.expType = 'Classification';  
-            APIService.apiRun({ crud: 'UnknownTestClass' }, classData, function (response) {
-                InProgressService.updateIsReady(1);
-                var results = response;
-                $scope.unknownClasses.splice(0, 1);
-                $scope.addUnknownClass(1, results.browse_ClassName, results.selectedText, results.browse_ChunkMode, results.browse_MinimumChunkSize, results.numberOfChunks);
-                $location.path('Tabs');
-            });
-
-        });
-
         
     }
 });
