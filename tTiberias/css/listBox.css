@@ -57,6 +57,7 @@
 
 .mytable{
     border: none;
+    height: 300px; 
 }
 
 .fix-border {
