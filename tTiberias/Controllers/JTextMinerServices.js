@@ -145,10 +145,21 @@ jTextMinerApp.factory('ExperimentService', function ($rootScope, ClassificationS
 
         this.data = {};
         this.data.userLogin = this.user;
-        this.Corpus_classes = [];
+        ClassService.Corpus_classes = [];
+
+        /*
+        // http://www.aspsnippets.com/Articles/AngularJS-Get-and-display-Current-Date-and-Time.aspx
+        var date = new Date();
+        $scope.formatedDate = $filter('date')(new Date(), 'dd.MM.yyyy HH-mm-ss');
+
+        //ExperimentService.ExperimentName += ' ' + $scope.formatedDate;
+        $scope.data.expName = ExperimentService.ExperimentName;
+        */
         APIService.apiRun({ crud: 'CheckUserLogin' }, this.data, function (response) {
             $location.path('Experiment');
         });
+
+        
     }
     // end save and load exp
 

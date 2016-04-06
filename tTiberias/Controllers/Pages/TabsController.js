@@ -35,70 +35,10 @@ jTextMinerApp.controller('TabsController', function ($scope, ExperimentService, 
 
     $scope.StartNewExperiment = function () {
         $scope.ExperimentMode = 'NewExperiment';
-        $scope.NextToNew();
+        ExperimentService.NewExperiment();
     }
     $scope.NewExperimentName = ExperimentService.NewExperimentName;
-    $scope.NextToNew = function () {
-        if ($scope.ExperimentMode == 'NewExperiment' && $scope.NewExperimentName.length == 0)
-            AlertsService.determineAlert({ msg: 'Please give a name for new experiment.', type: 'danger' });
-        else {
-            if (($scope.ExperimentMode == 'UploadStoredExperiment' && $scope.StoredExperimentName.length == 0)) {
-                AlertsService.determineAlert({ msg: 'Please choose stored experiment', type: 'danger' });
-            }
-            else {
-                InProgressService.updateIsReady(0);
-
-                if ($scope.ExperimentMode == 'NewExperiment') {
-                    ExperimentService.updateNewExperimentName($scope.NewExperimentName);
-
-                    $scope.data = {};
-                    $scope.data.userLogin = ExperimentService.user;
-                    $scope.data.expType = ExperimentService.ExperimentTypeModel;
-
-                    // http://www.aspsnippets.com/Articles/AngularJS-Get-and-display-Current-Date-and-Time.aspx
-                    var date = new Date();
-                    $scope.formatedDate = $filter('date')(new Date(), 'dd.MM.yyyy HH-mm-ss');
-
-                    //ExperimentService.ExperimentName += ' ' + $scope.formatedDate;
-                    $scope.data.expName = ExperimentService.ExperimentName;
-
-                    APIService.apiRun({ crud: 'NewExperiment' }, $scope.data, function (response) {
-                        InProgressService.updateIsReady(1);
-
-                        if (response.userLogin.length != 0) {
-                            AlertsService.determineAlert({ msg: 'NewExperiment', type: 'success' });
-                            //$location.path($scope.ExperimentTypeModel);
-                        }
-                        else
-                            AlertsService.determineAlert({ msg: 'There is such exp name', type: 'success' });
-                    });
-                }
-                else {
-                    ExperimentService.updateStoredExperimentName($scope.StoredExperimentName);
-
-                    $scope.data = {};
-                    $scope.data.userLogin = ExperimentService.user;
-                    $scope.data.expType = ExperimentService.ExperimentTypeModel;
-                    $scope.data.expName = ExperimentService.ExperimentName;
-
-                    APIService.apiRun({ crud: 'DownloadStoredExperiment' }, $scope.data, function (response) {
-                        InProgressService.updateIsReady(1);
-                        AlertsService.determineAlert({ msg: 'DownloadStoredExperiment', type: 'success' });
-                        $scope.UpdateDataForNewExperiment(response);
-                        FeatureService.updateTotalNumberOfFeatures(null);
-                        $scope.UpdateExtractFeaturesData();
-                        APIService.apiRun({ crud: 'Extract' }, $scope.data, function (response) {
-                            var results = response;
-                            //$location.path($scope.ExperimentTypeModel);
-                        });
-
-                    });
-                }
-
-            }
-        }
-    }
-
+  
     $scope.UpdateExtractFeaturesData = function () {
         $scope.data = {};
         $scope.data.userLogin = ExperimentService.user;
