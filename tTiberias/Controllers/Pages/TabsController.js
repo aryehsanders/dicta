@@ -38,7 +38,22 @@ jTextMinerApp.controller('TabsController', function ($scope, ExperimentService, 
         ExperimentService.NewExperiment();
     }
     $scope.NewExperimentName = ExperimentService.NewExperimentName;
-  
+
+    $scope.SaveExperiment = function () {
+        ngDialog.openConfirm({
+            template: 'partials/Dialogs/partial-SaveAs.html',
+            controller: 'SaveAsController',
+            className: 'ngdialog-theme-default',
+            scope: $scope
+        }).then(function (value) {
+            console.log('Modal promise resolved. Value: ', value);
+        }, function (reason) {
+            console.log('Modal promise rejected. Reason: ', reason);
+        });
+    }
+    
+    
+
     $scope.UpdateExtractFeaturesData = function () {
         $scope.data = {};
         $scope.data.userLogin = ExperimentService.user;
