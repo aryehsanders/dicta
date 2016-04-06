@@ -42,16 +42,16 @@
                                         </div>
                                     </div>
 
-                                    <div>
+                                    <div ng-show="searchedFileNameList.length > 0">
                                         <select ng-change="LoadExperiment();" class="width_250" ng-model="LoadPreviousResults" id="LoadPreviousResultsId" value="{{LoadPreviousResults}}">
                                             <option value="" style="color:gray;">Load previous results</option>
-                                            <option ng-repeat="fileName in fileNameList">{{fileName}}</option>
+                                            <option ng-repeat="fileName in searchedFileNameList">{{fileName}}</option>
                                         </select>
                                         <div class="expRecently">
                                             Recently searched
                                         </div>
                                         <hr />
-                                        <div ng-repeat="fileName in fileNameList">
+                                        <div ng-repeat="fileName in searchedFileNameList">
                                             <span ng-click="LoadExperiment2(fileName)">{{fileName}}</span>
                                             <hr />
                                         </div>
@@ -112,16 +112,16 @@
                                         </div>
                                     </div>
 
-                                    <div>
+                                    <div ng-show="comparedFileNameList.length > 0">
                                         <select ng-change="LoadExperiment();" class="width_250" ng-model="LoadPreviousResults" id="LoadPreviousResultsId" value="{{LoadPreviousResults}}">
                                             <option value="" style="color:gray;">Load previous results</option>
-                                            <option ng-repeat="fileName in fileNameList">{{fileName}}</option>
+                                            <option ng-repeat="fileName in comparedFileNameList">{{fileName}}</option>
                                         </select>
                                         <div class="expRecently">
                                             Recently compared
                                         </div>
                                         <hr />
-                                        <div ng-repeat="fileName in fileNameList">
+                                        <div ng-repeat="fileName in comparedFileNameList">
                                             <span ng-click="LoadExperiment2(fileName)">{{fileName}}</span>
                                             <hr />
                                         </div>

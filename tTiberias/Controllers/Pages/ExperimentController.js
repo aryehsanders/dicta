@@ -139,7 +139,10 @@ jTextMinerApp.controller('ExperimentController', function ($scope, ExperimentSer
     focus('focusMe');
 
 
+    
     $scope.fileNameList = [];
+    $scope.searchedFileNameList = [];
+    $scope.comparedFileNameList = [];
 
     $scope.data = {};
     $scope.data.userLogin = ExperimentService.user;
