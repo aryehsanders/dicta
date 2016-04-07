@@ -213,7 +213,13 @@ jTextMinerApp.controller('TabsController', function ($scope, ExperimentService, 
                     APIService.apiRun({ crud: 'RunClassification' }, $scope.data, function (response2) {
                         InProgressService.updateIsReady(1);
                         $scope.TSResultData = response2;
-                        $scope.setSelectedTestFile($scope.TSResultData.testSetResults[0], 0);
+                        $scope.testSetChunks = [];
+                        for (testFileIndex in $scope.TSResultData.testSetResults) {
+                            $scope.setSelectedTestFile($scope.TSResultData.testSetResults[testFileIndex], testFileIndex);
+                        }
+
+
+                        
                     });
                 });
 
@@ -338,6 +344,8 @@ jTextMinerApp.controller('TabsController', function ($scope, ExperimentService, 
 
     $scope.currentTestFileText = $sce.trustAsHtml("<b><p style='color:red;'>Select a test file from left side in order to see the text</p></b>");
 
+
+    $scope.testSetChunks = [];
     $scope.setSelectedTestFile = function (item, index) {
 
         $scope.inited = false;
@@ -356,21 +364,29 @@ jTextMinerApp.controller('TabsController', function ($scope, ExperimentService, 
         APIService.apiRun({ crud: 'TestFileData' }, $scope.data, function (response) {
             InProgressService.updateIsReady(1);
             var results = response;
-            $scope.currentTestFileText = $sce.trustAsHtml(results.htmlText);
-            $scope.legend = $sce.trustAsHtml(results.legend);
+            item.htmlText = $sce.trustAsHtml(results.htmlText);
+            item.featureList = results.features;
+            $scope.testSetChunks.push(item);
 
-            $scope.tempFeatureList = results.features;
-            if ($scope.tab === '1')
+            $scope.currentTestFileText = item.htmlText;
+            $scope.legend = $sce.trustAsHtml(results.legend);
+            
+            
+            $scope.tempFeatureList = item.featureList;
+            if ($scope.tab === '1') {
                 $scope.currentFeatureList = [];
-            else {
-                if ($scope.tab === '2')
+            } else {
+                if ($scope.tab === '2') {
                     $scope.currentFeatureList = $scope.tempFeatureList;
+                }
             }
+
+
         });
 
         $scope.inited = true;
     };
-    $scope.tab = '1';
+    $scope.tab = '2';
     
 
     // advanced  - algorithems
