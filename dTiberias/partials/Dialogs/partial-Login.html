@@ -1,0 +1,19 @@
+﻿<div class="ngdialog-message">
+    <h3>Login</h3>
+    <fieldset>
+        <legend>Insert your user name</legend>
+        <table style="width:100%;">
+            <tr>
+                <td>user name</td>
+                <td>
+                    <input focus-on="focusMe" ng-enter="Login()" ng-model="userLogin" type="text" value="{{userLogin}}" />
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+</div>
+<div class="ngdialog-buttons">
+    <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="Login()">SIGN IN</button>
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog('button')">Cancel</button>
+
+</div>
