@@ -45,10 +45,10 @@ jTextMinerApp.config(function ($stateProvider, $urlRouterProvider) {
         controller: 'ExperimentController',
         templateUrl: 'partials/Pages/partial-Experiment.html'
     })
-    .state('Classification', {
-        url: '/Classification',
-        controller: 'ClassificationController',
-        templateUrl: 'partials/Pages/partial-Classification.html'
+    .state('FirstTab', {
+        url: '/FirstTab',
+        controller: 'FirstTabController',
+        templateUrl: 'partials/Pages/partial-FirstTab.html'
     })
     .state('TestSet', {
         url: '/TestSet',
