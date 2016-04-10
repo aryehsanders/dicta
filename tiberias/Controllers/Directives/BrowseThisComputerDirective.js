@@ -13,36 +13,36 @@
             //input
             $scope.Browse_DoNotChunk_ChunkSize = BrowseClassService.Browse_DoNotChunk_ChunkSize;
             $scope.$watch('Browse_DoNotChunk_ChunkSize', function () {
-                BrowseClassService.Browse_DoNotChunk_ChunkSize = $scope.Browse_DoNotChunk_ChunkSize;
+                BrowseClassService.updateBrowse_DoNotChunk_ChunkSize($scope.Browse_DoNotChunk_ChunkSize);
             });
             $scope.Browse_AppendAndChunk_ChunkSize = BrowseClassService.Browse_AppendAndChunk_ChunkSize;
             $scope.$watch('Browse_AppendAndChunk_ChunkSize', function () {
-                BrowseClassService.Browse_AppendAndChunk_ChunkSize = $scope.Browse_AppendAndChunk_ChunkSize;
+                BrowseClassService.updateBrowse_AppendAndChunk_ChunkSize($scope.Browse_AppendAndChunk_ChunkSize);
             });
             $scope.Browse_ChunkBigFiles_ChunkSize = BrowseClassService.Browse_ChunkBigFiles_ChunkSize;
             $scope.$watch('Browse_ChunkBigFiles_ChunkSize', function () {
-                BrowseClassService.Browse_ChunkBigFiles_ChunkSize = $scope.Browse_ChunkBigFiles_ChunkSize;
+                BrowseClassService.updateBrowse_ChunkBigFiles_ChunkSize($scope.Browse_ChunkBigFiles_ChunkSize);
             });
             $scope.Browse_NumberOfFiles = BrowseClassService.countWordsForUploadedZipFile.length;
             $scope.$watch('Browse_NumberOfFiles', function () {
-                BrowseClassService.Browse_NumberOfFiles = $scope.Browse_NumberOfFiles;
+                BrowseClassService.updateBrowse_NumberOfFiles($scope.Browse_NumberOfFiles);
             });
             $scope.Browse_NumberOfWords = BrowseClassService.Browse_NumberOfWords;
             $scope.$watch('Browse_NumberOfWords', function () {
-                BrowseClassService.Browse_NumberOfWords = $scope.Browse_NumberOfWords;
+                BrowseClassService.updateBrowse_NumberOfWords($scope.Browse_NumberOfWords);
             });
             $scope.Browse_ChunkMode = BrowseClassService.Browse_ChunkMode;
             $scope.$watch('Browse_ChunkMode', function () {
-                BrowseClassService.Browse_ChunkMode = $scope.Browse_ChunkMode;
+                BrowseClassService.updateBrowse_ChunkMode($scope.Browse_ChunkMode);
             });
             $scope.Browse_MinimumChunkSize = BrowseClassService.Browse_MinimumChunkSize;
             $scope.$watch('Browse_MinimumChunkSize', function () {
-                BrowseClassService.Browse_MinimumChunkSize = $scope.Browse_MinimumChunkSize;
+                BrowseClassService.updateBrowse_MinimumChunkSize($scope.Browse_MinimumChunkSize);
             });
             
             $scope.zipFile='';
             $scope.$watch('zipFile', function () {
-                BrowseClassService.Browse_FileName = $scope.zipFile.name;
+                BrowseClassService.updateBrowse_FileName($scope.zipFile.name);
             });
 
 
