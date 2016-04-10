@@ -14,7 +14,6 @@
 
     classData.browse_ChunkMode = BrowseClassService.Browse_ChunkMode;
     $rootScope.$on('Browse_ChunkModeUpdated', function () {
-        alert("SaveClassInterface: " + BrowseClassService.Browse_ChunkMode);
         classData.browse_ChunkMode = BrowseClassService.Browse_ChunkMode;
     });
     classData.browse_MinimumChunkSize = BrowseClassService.Browse_MinimumChunkSize;
