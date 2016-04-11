@@ -1,6 +1,8 @@
 ﻿
-jTextMinerApp.controller('FirstTabController', function ($scope) {
+jTextMinerApp.controller('FirstTabController', function ($scope, $location) {
    
-    
+    $scope.GoToSecondTab = function () {
+        $location.path('SecondTab');
+    }
 });
 

@@ -3,6 +3,9 @@ jTextMinerApp.controller('SecondTabController', function ($scope, ExperimentServ
 
     $scope.userLogin = ExperimentService.user;
 
+    $scope.GoToFirstTab = function () {
+        $location.path('FirstTab');
+    }
 
     $scope.StartNewExperiment = function () {
         $scope.ExperimentMode = 'NewExperiment';

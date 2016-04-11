@@ -159,7 +159,7 @@ jTextMinerApp.factory('ExperimentService', function ($rootScope, ClassificationS
         $scope.data.expName = ExperimentService.ExperimentName;
         */
         APIService.apiRun({ crud: 'CheckUserLogin' }, this.data, function (response) {
-            $location.path('Experiment');
+            $location.path('Login');
         });
 
         
