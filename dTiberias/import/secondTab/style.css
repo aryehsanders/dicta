@@ -136,7 +136,7 @@ padding-top: 20px;
 }
 .main-title h4 {
 	background:#F2F2F2;
-	padding:5px 0px;
+	padding: 5px 0px 7px;
 }
 
 .main-title h4 b {
@@ -144,8 +144,18 @@ padding-top: 20px;
 	background:#FFFFFF;
 	padding: 8px 18px;
 	font-size:19px;
+	 box-shadow: -1px -2px 5px 0px #a8a8a8;
+	    margin-right: 8px;
 	    border-radius: 5px 5px 0 0;
+}.main-title h4 b.active{
+	color:#02407B;
+	background:#bdccd4;
+	padding: 8px 18px;
+	font-size:19px;
+   border-radius: 5px 5px 0 0;
+   box-shadow: none;
 }
+
 
 .main-title h4  b  img {
 	margin-left:30px;
@@ -236,19 +246,92 @@ border-bottom: 1px solid #8A8A8A;
 }
 
 .box-left-side {
-	background:#fff;
-	    box-shadow: 0px 0px 10px 0 #a8a8a8;
+	background:#F2F2F2;
+	    box-shadow: -3px 0px 10px 0 #a8a8a8;
 	border-right:2px solid #bdccd4;
 	border-bottom:2px solid #BDCBD4;
 	
 }
 
 .box-in {
-	background:#F2F2F2;
-	padding:15px 10px;
-	border-bottom:3px solid #BDCBD4;
+	    background: #F2F2F2;
+    padding: 15px 10px 60px;
+        float: left;
+    border-bottom: 1px solid #BDCBD4;
+}
+.new-box{   
+	background: #F2F2F2;
+    padding: 0px 10px 15px !important;
+     border-bottom: 1px solid #BDCBD4;
+     width: 100%;
+}
+.cross-verification{
+    background: #F2F2F2;
+    padding: 15px 15px 15px !important;
+    width: 100%;
+}
+.cross-verification p{
+	color: #333333;
+	font-size: 15px;
+	font-style: italic;
+	text-align: right;
+	margin-bottom: 14px;
+}
+.cross-verification a{
+background: #005488;
+    padding: 8px 20px;
+    color: #fff;
+    display: block;
+    text-align: center;
+    width: 100%;
+    font-family: ChaparralPro;
+    border-radius: 5px;
+    font-size: 18px;
+    box-shadow: -2px 2px 0px 0px #002d44;
 }
 
+.feature-set{
+	background: #F2F2F2;
+    padding: 15px 10px 15px !important;
+    float: left;
+     border-bottom: 1px solid #BDCBD4;
+     width: 100%;
+}
+.feature-set ul{
+	margin: 0;
+}
+.feature-set ul li a{
+    color: #005488;
+    font-size: 13px;
+    padding: 5px 7px;
+    border-radius: 5px;
+    width: 100%;
+    display: block;
+}
+.feature-set ul li a:hover{
+	background: #d7dfe3;
+	}
+.feature-set ul li a img{
+	width: 16px;
+}
+span.right-edit {
+    text-align: right;
+    float: right;
+    padding-right: 10px;
+}
+.alogrithim{
+	font-size: 12px;
+	color: #c4d1d8;
+	text-align: left;
+	margin: 0;
+	text-transform: capitalize;
+}
+.alogrithim-class{
+	margin: 0;
+font-size: 15px;
+	color: #0e5d8e;
+	text-align: left;
+}
 .box-in h2 {
 	font-family:ChaparralPro;
 	font-size:19px;
@@ -261,7 +344,7 @@ border-bottom: 1px solid #8A8A8A;
 }
 
 .box-in h2  span {
-	padding-left: 160px;
+	padding-left: 216px;
 }
 
 .box-in p {
@@ -272,7 +355,8 @@ border-bottom: 1px solid #8A8A8A;
 }
 
 .box-found {
-	padding:10px 12px;
+    padding: 0px;
+    margin-top: 15px;
 }
 
 .box-found h3 {
@@ -281,9 +365,16 @@ border-bottom: 1px solid #8A8A8A;
 	padding:10px 0px;
 }
 .box-fexo {
-	padding:0px 10px;
-	background:#F2F2F2;
-	    border-radius: 5px;
+    padding: 0px 0px;
+    background: #fff;
+    border-radius: 5px;
+    display: block;
+    float: left;
+    height: 45px;
+        width: 368px;
+            margin-bottom: 8px;
+    border: 1px solid #bdccd4;
+    clear: both;
 }
 .box-bys ul li a i{
 	color: #333;
@@ -294,15 +385,56 @@ border-bottom: 1px solid #8A8A8A;
 }
 
 .box-fexo ul li:nth-child(2) {
-	padding-left:150px;
+	padding-left:5px;
 }
 
 .box-fexo ul li h2 {
 	font-size:16px;
 	font-family:ChaparralPro;
 	font-weight:bold;
+	box-shadow: none;
+    width: 320px;;
 }
-
+.box-fexo ul li h2 span{
+	padding-left: 5px;
+}
+.box-fexo ul{
+background: #fff;
+    border-radius: 5px;
+    border: 1px solid #bdccd4;
+}
+.left-icons{
+	    width: 32px;
+    float: left;
+}
+.left-icons img{
+	margin-top: 1px;
+}
+.right-content{
+    float: right;
+    width: 326px;
+    margin-right: 2px;
+}
+.right-content h2{
+	    border: 0;
+	    font-size: 14px;
+    border-radius: 0;
+    box-shadow: none;
+          padding: 4px 2px 0 5px;
+}
+.color-black{
+color:#696969;
+}
+.clearfix{
+	clear: both;
+}
+.small-details{
+	    font-size: 12px;
+    color: #c6d3da;
+}
+.right-content h2 span {
+    padding: 0px 7px 0 5px;
+}
 .box-fexo ul li small {
 	font-style:italic;
 	
@@ -418,7 +550,7 @@ border-bottom: 1px solid #8A8A8A;
 	    padding: 12px 15px 23px;
 }
 .border-box1 p {
-	    padding: 20px 15px 13px;
+	    padding: 20px 15px 22px;
 	    margin: 5px 5px 0;
 	    background:#FFFEA4;
 	    b

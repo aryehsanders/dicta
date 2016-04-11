@@ -1,5 +1,5 @@
 ﻿
-jTextMinerApp.controller('LoginController', function ($scope, ngDialog) {
+jTextMinerApp.controller('LoginController', function ($scope, ngDialog, ExperimentService, $location, APIService, focus, AlertsService, InProgressService) {
     $scope.LoginDlg = function () {
         ngDialog.openConfirm({
             template: 'partials/Dialogs/partial-Login.html',
@@ -7,7 +7,7 @@ jTextMinerApp.controller('LoginController', function ($scope, ngDialog) {
             className: 'ngdialog-theme-default',
             scope: $scope
         }).then(function (value) {
-            console.log('Modal promise resolved. Value: ', value);
+            //console.log('Modal promise resolved. Value: ', value);
         }, function (reason) {
             console.log('Modal promise rejected. Reason: ', reason);
         });

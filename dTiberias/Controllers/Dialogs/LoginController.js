@@ -17,7 +17,7 @@ jTextMinerApp.controller('DlgLoginController', function ($scope, ExperimentServi
 
                     AlertsService.determineAlert({ msg: 'Login success! Hi ' + $scope.userLogin + ', please choose one of the experiments below and click on "Next"', type: 'success' });
                     $scope.confirm();
-                    $location.path('FirstTab');
+                    $location.path('Experiment');
                 }
                 else {
                     AlertsService.determineAlert({ msg: 'You are not allowed to login!', type: 'danger' });

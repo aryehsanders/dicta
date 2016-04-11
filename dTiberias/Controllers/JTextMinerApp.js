@@ -50,6 +50,11 @@ jTextMinerApp.config(function ($stateProvider, $urlRouterProvider) {
         controller: 'FirstTabController',
         templateUrl: 'partials/Pages/partial-FirstTab.html'
     })
+    .state('SecondTab', {
+        url: '/SecondTab',
+        controller: 'SecondTabController',
+        templateUrl: 'partials/Pages/partial-SecondTab.html'
+    })
     .state('TestSet', {
         url: '/TestSet',
         controller: 'TestSetController',

@@ -102,7 +102,7 @@ jTextMinerApp.controller('ExperimentController', function ($scope, ExperimentSer
                         if (response.userLogin.length != 0) {
                             AlertsService.determineAlert({ msg: 'NewExperiment', type: 'success' });
                             //$location.path($scope.ExperimentTypeModel);
-                            $location.path('Tabs');
+                            $location.path('SecondTab');
                         }
                         else
                             AlertsService.determineAlert({ msg: 'There is such exp name', type: 'success' });
@@ -126,7 +126,7 @@ jTextMinerApp.controller('ExperimentController', function ($scope, ExperimentSer
                         APIService.apiRun({ crud: 'Extract' }, $scope.data, function (response) {
                             var results = response;
                             //$location.path($scope.ExperimentTypeModel);
-                            $location.path('Tabs');
+                            $location.path('SecondTab');
                         });
                         
                     });
