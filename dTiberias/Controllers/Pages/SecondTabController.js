@@ -1,5 +1,6 @@
 ﻿
 jTextMinerApp.controller('SecondTabController', function ($scope, ExperimentService, $location, focus, APIService, $filter, AlertsService, ClassificationService, FeatureService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce, ngDialog) {
+
     $scope.StartNewExperiment = function () {
         $scope.ExperimentMode = 'NewExperiment';
         ExperimentService.NewExperiment();
@@ -207,8 +208,6 @@ jTextMinerApp.controller('SecondTabController', function ($scope, ExperimentServ
                             $scope.setSelectedTestFile($scope.TSResultData.testSetResults[testFileIndex], testFileIndex);
                         }
 
-
-
                     });
                 });
 
@@ -375,7 +374,7 @@ jTextMinerApp.controller('SecondTabController', function ($scope, ExperimentServ
 
         $scope.inited = true;
     };
-    $scope.tab = '2';
+    $scope.tab = '1';
 
 
     // advanced  - algorithems
