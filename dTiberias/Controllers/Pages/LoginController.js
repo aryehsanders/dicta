@@ -1,9 +1,7 @@
 ﻿
 jTextMinerApp.controller('LoginController', function ($scope, ngDialog, ExperimentService, $location, APIService, focus, AlertsService, InProgressService, $filter, ClassificationService, FeatureService, ClassService, SelectClassService, SaveClassInterface) {
-
-
-    $scope.userLogin = ExperimentService.user;
-
+    $scope.currentUser = ExperimentService.user;
+    $scope.showSignUp = true;
     if (ExperimentService.isNewExperiment)
         ExperimentService.isNewExperiment = false;
 
@@ -19,8 +17,12 @@ jTextMinerApp.controller('LoginController', function ($scope, ngDialog, Experime
     $scope.$on('valuesUpdated', function () {
         $scope.ExperimentTypeModel = ExperimentService.ExperimentTypeModel;
     });
+    $scope.$on('userUpdated', function () {
+        $scope.currentUser = ExperimentService.user;
+        $scope.showSignUp = $scope.currentUser==='user';
 
-
+    });
+    
 
     $scope.ExperimentMode = ExperimentService.ExperimentMode;
     $scope.$watch('ExperimentMode', function () {

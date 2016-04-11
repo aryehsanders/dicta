@@ -8,7 +8,6 @@
 <!-- End - before Login Tamar design -->
 
 <in-progress></in-progress>
-
 <header class="header">
     <div class="container">
         <div class="nav-menu">
@@ -24,12 +23,19 @@
                     </li>
                 </ul>
             </div>
-            <div class="col-md-4 menu-signup">
+            
+            <div ng-show="showSignUp" class="col-md-4 menu-signup">
                 <ul>
                     <li>
-                        <a ng-show="userLogin === 'user'" href="#">Sign Up</a>
-                        <a ng-show="userLogin != 'user'">{{userLogin}}</a>
+                        <a href="#">Sign Up</a>
                         <a ng-click="LoginDlg();">Sign In</a>
+                    </li>
+                </ul>
+            </div>
+            <div ng-show="!showSignUp" class="col-md-4 menu-signup">
+                <ul>
+                    <li>
+                        <a>Hi {{currentUser}}</a>
                     </li>
                 </ul>
             </div>
@@ -47,10 +53,10 @@
                 To find unknown matches, analyze authorship <br />
                 and resolve disputed classification
             </p>
-            <h3>Already a member? <a ng-click="LoginDlg();">Sign In</a></h3>
+            <h3 ng-show="showSignUp">Already a member? <a ng-click="LoginDlg();">Sign In</a></h3>
         </div>
-        <div class="col-md-6 banner-right">
-            <form class="form-horizontal">
+        <div ng-show="showSignUp" class="col-md-6 banner-right">
+            <form  class="form-horizontal">
                 <div class="form-group1">
                     <h2>
                         Sign up to Dicta to access your past <br />

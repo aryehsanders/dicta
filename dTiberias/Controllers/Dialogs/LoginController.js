@@ -8,8 +8,7 @@ jTextMinerApp.controller('DlgLoginController', function ($scope, ExperimentServi
             focus('focusMe');
         }
         else {
-            ExperimentService.user = $scope.userLogin;
-
+            ExperimentService.updateUser($scope.userLogin);
             $scope.data = {};
             $scope.data.userLogin = $scope.userLogin;
             APIService.apiRun({ crud: 'CheckUserLogin' }, $scope.data, function (response) {

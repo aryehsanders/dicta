@@ -49,7 +49,10 @@ jTextMinerApp.factory('ExperimentService', function ($rootScope, ClassificationS
     //service.baseUrl = "http://localhost:8080/NewWebSite/api/JTextMinerAPI";
 
     service.user = 'user';
-
+    service.updateUser = function (value) {
+        this.user = value;
+        $rootScope.$broadcast("userUpdated");
+    }
     service.isNewExperiment = true;
 
     
