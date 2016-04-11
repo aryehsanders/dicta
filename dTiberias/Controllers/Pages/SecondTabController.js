@@ -1,6 +1,9 @@
 ﻿
 jTextMinerApp.controller('SecondTabController', function ($scope, ExperimentService, $location, focus, APIService, $filter, AlertsService, ClassificationService, FeatureService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce, ngDialog) {
 
+    $scope.userLogin = ExperimentService.user;
+
+
     $scope.StartNewExperiment = function () {
         $scope.ExperimentMode = 'NewExperiment';
         ExperimentService.NewExperiment();
