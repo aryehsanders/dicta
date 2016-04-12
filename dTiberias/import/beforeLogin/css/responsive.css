@@ -124,11 +124,22 @@
 
 
 .btn-text ul li a {
-	font-size: 18px;
-	padding: 3px 11px;
-	border-radius:8px;
-	margin-right: 5px;
+font-size: 17px;
+    padding: 6px 28px;
+    border-radius: 5px;
+    height: 35px;
+    color: #ffffff;
+    background: #005488;
+    box-shadow: -1px 3px 0px #002d44;
+    margin-right: 10px;
 }
+.btn-text ul li a:hover {
+	background: #002d44;;
+	color: #fff;
+	text-decoration: none;
+	box-shadow: -1px 3px 0px #005488;
+}
+
 
 
 

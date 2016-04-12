@@ -8,6 +8,8 @@
 <!-- End - before Login Tamar design -->
 
 <in-progress></in-progress>
+
+
 <header class="header">
     <div class="container">
         <div class="nav-menu">
@@ -15,27 +17,24 @@
                 <a href="#"><img src="import/beforeLogin/images/top-logo.png" alt="" /></a>
             </div>
             <div class="col-md-4 menu-mid">
-                <ul>
-                    <li>
-                        <a href="#">Our Product</a>
-                        <a href="#">About Us</a>
-                        <a href="#">Team</a>
-                    </li>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Our Product</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Team</a></li>
                 </ul>
             </div>
-            
             <div ng-show="showSignUp" class="col-md-4 menu-signup">
-                <ul>
-                    <li>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active">
                         <a href="#">Sign Up</a>
-                        <a ng-click="LoginDlg();">Sign In</a>
                     </li>
+                    <li><a ng-click="LoginDlg();">Sign In</a></li>
                 </ul>
             </div>
             <div ng-show="!showSignUp" class="col-md-4 menu-signup">
-                <ul>
-                    <li>
-                        <a>Hi {{currentUser}}</a>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active">
+                        <a href="#">Hi {{currentUser}}</a>
                     </li>
                 </ul>
             </div>
@@ -46,35 +45,37 @@
 
 <div class="banner">
     <div class="container">
-        <div class="col-md-6 banner-left">
+        <div class="col-md-7 banner-left">
             <h2><img src="import/beforeLogin/images/logo.png" alt="" /></h2>
             <p>
                 Use the power of machine learning <br />
-                To find unknown matches, analyze authorship <br />
+                to find unknown matches, analyze authorship <br />
                 and resolve disputed classification
             </p>
-            <h3 ng-show="showSignUp">Already a member? <a ng-click="LoginDlg();">Sign In</a></h3>
+            <h3 ng-show="showSignUp">Already a member? <a href="#">Sign In</a></h3>
         </div>
-        <div ng-show="showSignUp" class="col-md-6 banner-right">
-            <form  class="form-horizontal">
-                <div class="form-group1">
+        <div ng-show="showSignUp" class="col-md-5 banner-right">
+            <form class="form-horizontal">
+                <div class="form-group">
                     <h2>
                         Sign up to Dicta to access your past <br />
                         experiment & make online collections
                     </h2>
                 </div>
                 <div class="form-group">
-                    <div class="col-sm-10">
+                    <div class="col-sm-12">
                         <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-sm-10">
+                    <div class="col-sm-12">
                         <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
                     </div>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-default">Sign Up</button>
+                    <div class="col-sm-12">
+                        <button type="submit" class="btn btn-default">Sign Up</button>
+                    </div>
                 </div>
             </form>
         </div>
@@ -97,6 +98,7 @@
             <ul>
                 <li><a ng-click="StartNewExperiment('SelectOnlineCorpus');">From Collections</a></li>
                 <li><a ng-click="StartNewExperiment('BrowseThisComputer');">+ Upload</a></li>
+
             </ul>
         </div>
     </div>
@@ -108,7 +110,7 @@
         <form class="form-horizonta">
             <div class="form-group-search">
                 <input type="search" class="form-control3" id="inputsearch" placeholder="input any text or concept">
-                <button type="submit" class="a"><img src="import/beforeLogin/images/search.png" alt="" /></button>
+                <button type="submit" class="a"><i class="fa fa-search"></i></button>
             </div>
         </form>
     </div>
@@ -144,6 +146,9 @@
 </footer>
 
 
+
+
+
 <div ng-show="showClassDialog" ng-controller="ClassDialogController">
     <div aria-labelledby="ngdialog1-aria-labelledby" role="alertdialog" id="ngdialog10" class="ngdialog ngdialog-theme-default ng-scope">
         <div class="ngdialog-overlay"></div>
@@ -167,6 +172,3 @@
         </div>
     </div>
 </div>
-
-
-
