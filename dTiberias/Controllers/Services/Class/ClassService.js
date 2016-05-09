@@ -1,6 +1,7 @@
 ﻿jTextMinerApp.factory('ClassService', function ($rootScope, SegmentationService) {
     var service = {};
 
+    service.colors = ["Red", "Green", "Blue", "FFFF00", "FF00FF", "00FFFF", "Gray"];
     service.ExperimentActionMode = 'SelectOnlineCorpus';//'BrowseThisComputer';
     service.updateExperimentActionMode = function (value) {
         this.ExperimentActionMode = value;

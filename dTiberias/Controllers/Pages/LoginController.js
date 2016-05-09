@@ -205,6 +205,7 @@ jTextMinerApp.controller('LoginController', function ($scope, ngDialog, Experime
             scope: $scope
         }).then(function (value) {
             //console.log('Modal promise resolved. Value: ', value);
+            $location.path('AfterLogin');
         }, function (reason) {
             console.log('Modal promise rejected. Reason: ', reason);
         });

@@ -8,13 +8,13 @@ jTextMinerApp.controller('DlgLoginController', function ($scope, ExperimentServi
             focus('focusMe');
         }
         else {
-            ExperimentService.updateUser($scope.userLogin);
             $scope.data = {};
             $scope.data.userLogin = $scope.userLogin;
             APIService.apiRun({ crud: 'CheckUserLogin' }, $scope.data, function (response) {
                 if (response.userLogin.length != 0) {
 
                     AlertsService.determineAlert({ msg: 'Login success! Hi ' + $scope.userLogin + ', please choose one of the experiments below and click on "Next"', type: 'success' });
+                    ExperimentService.updateUser($scope.userLogin);
                     $scope.confirm();
                     //$location.path('Experiment');
                 }

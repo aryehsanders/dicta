@@ -344,7 +344,7 @@ font-size: 15px;
 }
 
 .box-in h2  span {
-	padding-left: 216px;
+	padding-left: 116px;
 }
 
 .box-in p {
@@ -532,8 +532,7 @@ color:#696969;
     box-shadow: 0px 3px 0 #e4e293;
 }
 .border-box h2,.border-box1 h2{
-	background: #F2F2F2;
-    font-family: ChaparralPro;
+	font-family: ChaparralPro;
     font-size: 14px;
     margin: 0;
     padding: 8px 18px 8px 18px;
@@ -715,8 +714,20 @@ color:#696969;
 }
 
 
+.Blue {
+    background-color: #8EC3EA;
+}
 
+.Red {
+    background-color: #ffe9d2;
+}
 
+.Green {
+    background-color: #e4f4d9;
+}
+.Gray {
+    background-color: #F2F2F2;
+}
 
 
 

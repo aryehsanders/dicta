@@ -7,17 +7,6 @@
  height: 600px;
 }
 
-.Blue {
-    background-color: #BEE2F9;
-}
-
-.Red {
-    background-color: #F9D5EE;
-}
-
-.Green {
-    background-color: #D5F7BA;
-}
 .Purple {
  color: purple;
 }
@@ -74,4 +63,9 @@
 
 #NumberOfSentencesLockedInIdSlider .slider-selection {
 	background: #BABABA;
+}
+
+
+.padding {
+    padding:10px 30px;
 }

@@ -35,8 +35,7 @@
 /*style the font-awesome check box*/
 .fa{
     position:relative;
-    top:5px;
-    padding-right: 8px;
+    top:0px;
 }
 
 .fa:hover{

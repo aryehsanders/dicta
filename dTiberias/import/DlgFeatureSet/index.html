@@ -14,7 +14,11 @@
     </head>
     <body>
       
-	  
+	  <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+  Popup
+</button>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="header_area">
 			<div class="container">
 				<div class="row">
@@ -25,7 +29,7 @@
 					</div>
 					<div class="col-md-6 col-sm-6 col-lg-6">
 						<div class="cross_area">
-							<img src="img/basics-22-128.png" alt="" />
+							<img data-dismiss="modal" aria-label="Close" src="img/basics-22-128.png" alt="" />
 						</div>
 					</div>
 				</div>
@@ -218,14 +222,14 @@
 				<div class="row">
 					<div class="col-md-12 col-sm-12 col-lg-12">
 						<div class="footer_content">
-							<h1><span>Discard Changes </span> <strong> <i class="fa fa-check-circle-o"></i> Save Features Set </strong> </h1>
+							<h1><span data-dismiss="modal">Discard Changes </span> <strong> <i class="fa fa-check-circle-o"></i> Save Features Set </strong> </h1>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
        
-	   
+	   </div>
 	   
 	   
  

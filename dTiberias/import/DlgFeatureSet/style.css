@@ -7,7 +7,9 @@ body{font-size:14px;line-height:16px;background:#fff;color:#000}
 	src : url(font/MyriadPro-Regular.otf);
 	font-family:MyriadPro;
 }
-
+#myModal{
+	background: #fff;
+}
 
 .header_area{}
 .container{}
@@ -55,14 +57,14 @@ position: absolute;
 right: 28px;cursor:pointer}
 .per_class{}
 .per_class ul{margin:0;padding:0;list-style:none}
-.per_class ul li{display: inline-block;padding: 13px 70px;}
+.per_class ul li{display: inline-block;padding: 13px 30px;}
 .per_class ul li a{text-decoration:none;background: #fff none repeat scroll 0 0;font-size:20px;color:#035689;font-weight:bold;border: 1px solid #fff;border-radius: 10px;box-shadow: -2px 3px 0 0 #5e737f;padding: 10px 15px;}
 .per_class ul li a img{margin-left: 20px;
 width: 20px;cursor:pointer}
 .per_class ul li a> span{color: #035689;
 font-size: 26px;
 padding: 14px;}
-.per_class ul li span{color:#767676;font-size: 18px;padding: 11px;}
+.per_class ul li span{color:#767676;font-size: 25px;padding: 11px;}
 .feature_area{text-align:center;position:relative}
 .feature_area img{height: 90%;
 position: absolute;

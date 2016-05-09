@@ -3,6 +3,120 @@ jTextMinerApp.controller('SecondTabController', function ($scope, ExperimentServ
 
     $scope.userLogin = ExperimentService.user;
 
+    $scope.colors = ClassService.colors;
+    $scope.indexOfColor = function (val) {
+        var l = $scope.classes.length;
+        for (k = 0; k < l; k = k + 1) {
+            if (angular.equals($scope.classes[k].title, val)) {
+                return $scope.colors[k];
+            }
+        }
+        return "Grey";
+    }
+    $scope.tTestScale = 4;
+
+    $scope.beforeOther = function (avg, other, val, ttest) {
+        
+        if (ttest >= ($scope.tTestScale))
+            return "";
+        var delta = $scope.tTestScale / 20;
+        var dots = Math.floor(($scope.tTestScale - ttest) / 2 / delta);
+        var strDots = "";
+        for (k = 0; k < dots; k = k + 1) {
+            strDots += ".";
+        }
+        return strDots;
+    }
+    $scope.afterOther = function (avg, other, val, ttest) {
+
+        if (ttest >= ($scope.tTestScale))
+            return "..........";
+        var delta = $scope.tTestScale / 20;
+        var dots = Math.floor(ttest/2 / delta);
+        var strDots = "";
+        for (k = 0; k < dots; k = k + 1) {
+            strDots += ".";
+        }
+        return strDots;
+    }
+    $scope.beforeClass = function (avg, other, val, ttest) {
+
+        if (ttest >= ($scope.tTestScale))
+            return "..........";
+        var delta = $scope.tTestScale / 20;
+        var dots = Math.floor(ttest / 2 / delta);
+        var strDots = "";
+        for (k = 0; k < dots; k = k + 1) {
+            strDots += ".";
+        }
+        return strDots;
+    }
+    $scope.afterClass = function (avg, other, val, ttest) {
+
+        if (ttest >= ($scope.tTestScale))
+            return "";
+        var delta = $scope.tTestScale / 20;
+        var dots = Math.floor(($scope.tTestScale - ttest) / 2 / delta);
+        var strDots = "";
+        for (k = 0; k < dots; k = k + 1) {
+            strDots += ".";
+        }
+        return strDots;
+    }
+    $scope.beforeClassBeforeStar = function (avg, other, val) {
+        
+        if (val >= avg)
+            return ".......";
+        var delta = (avg - other) / 10;
+        var dots = Math.floor((val - other)/delta);  
+        var strDots = "";
+        for (k = 0; k < dots; k = k + 1) {
+            strDots += ".";
+        }
+        
+        return strDots;
+    }
+    $scope.beforeClassAfterStar = function (avg, other, val) {
+        if (val >= avg)
+            return ".......";
+        var delta = (avg - other) / 10;
+        var dots = Math.floor((avg - val) / delta);
+        var strDots = "";
+        for (k = 0; k < dots; k = k + 1) {
+            strDots += ".";
+        }
+        return strDots;
+    }
+    $scope.afterClassBeforeStar = function (avg, other, val) {
+        if (val < avg)
+            return ".......";
+        var delta = (avg - other) / 10;
+        if ((delta*10 <= (val - avg)))
+            return "..........";
+        var dots = Math.floor((val - avg) / delta);
+        var strDots = "";
+        for (k = 0; k < dots; k = k + 1) {
+            strDots += ".";
+        }
+        return strDots;
+    }
+    $scope.afterClassAfterStar = function (avg, other, val) {
+        if (val < avg)
+            return ".......";
+        var delta = (avg - other) / 10;
+        if ((delta * 10 <= (val - avg)))
+            return "";
+        var dots = Math.floor((delta * 10 - (val - avg)) / delta);
+        var strDots = "";
+        for (k = 0; k < dots; k = k + 1) {
+            strDots += ".";
+        }
+        return strDots;
+    }
+    $scope.objArrayContains = function (arr, keyName, val) {
+        return $scope.colors(arr.map(function (a) { return a[keyName]; }).indexOf(val));
+    };
+
     $scope.GoToFirstTab = function () {
         $location.path('FirstTab');
     }
@@ -285,22 +399,9 @@ jTextMinerApp.controller('SecondTabController', function ($scope, ExperimentServ
 
     $scope.updateCurrentFeatureListToEmpty = function () {
         $scope.tab = 1;
-        $scope.currentFeatureList = [];
     }
     $scope.updateCurrentFeatureList = function () {
         $scope.tab = 2;
-        $scope.currentFeatureList = $scope.tempFeatureList;
-        /*
-                $scope.data = {};
-                $scope.data.userLogin = ExperimentService.user;
-                $scope.data.index = $scope.currentIndex;
-                APIService.apiRun({ crud: 'TestFileData' }, $scope.data, function (response) {
-                    var results = response;
-                    $scope.currentTestFileText = $sce.trustAsHtml(results.htmlText);
-                    $scope.legend = $sce.trustAsHtml(results.legend);
-                    $scope.currentFeatureList = results.features;
-                });
-         */
     }
 
 
@@ -316,38 +417,12 @@ jTextMinerApp.controller('SecondTabController', function ($scope, ExperimentServ
         $scope.showInProcess = InProgressService.isReady != 1;
     });
 
-    // select test file
-    $scope.selectedTestFileIndex = -1;
-    $scope.$watch('selectedTestFileIndex', function () {
-        if (!angular.isUndefined($scope.selectedTestFileIndex)) {
-            ExperimentService.updateSelectedTestFileIndex($scope.selectedTestFileIndex);
-        }
-    });
-
-    $scope.selectedTestFile = null;
-    $scope.selectedTestFileValue = '';
-
-    $scope.isSelected = function (item) {
-        if ($scope.selectedTestFile) {
-            return $scope.selectedTestFile === item;
-        }
-        else {
-            return false;
-        }
-    };
-
-    $scope.currentTestFileText = $sce.trustAsHtml("<b><p style='color:red;'>Select a test file from left side in order to see the text</p></b>");
-
+    
 
     $scope.testSetChunks = [];
     $scope.setSelectedTestFile = function (item, index) {
 
         $scope.inited = false;
-
-        $scope.selectedTestFileIndex = index;
-
-        $scope.selectedTestFile = item;
-        $scope.selectedTestFileValue = item.name;
 
         InProgressService.updateIsReady(0);
 
@@ -362,18 +437,7 @@ jTextMinerApp.controller('SecondTabController', function ($scope, ExperimentServ
             item.featureList = results.features;
             $scope.testSetChunks.push(item);
 
-            $scope.currentTestFileText = item.htmlText;
             $scope.legend = $sce.trustAsHtml(results.legend);
-
-
-            $scope.tempFeatureList = item.featureList;
-            if ($scope.tab === '1') {
-                $scope.currentFeatureList = [];
-            } else {
-                if ($scope.tab === '2') {
-                    $scope.currentFeatureList = $scope.tempFeatureList;
-                }
-            }
 
 
         });

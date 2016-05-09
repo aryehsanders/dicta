@@ -40,6 +40,11 @@ jTextMinerApp.config(function ($stateProvider, $urlRouterProvider) {
         controller: 'LoginController',
         templateUrl: 'partials/Pages/partial-Login.html'
     })
+    .state('AfterLogin', {
+        url: '/AfterLogin',
+        controller: 'AfterLoginController',
+        templateUrl: 'partials/Pages/partial-AfterLogin.html'
+    })
     .state('Experiment', {
         url: '/Experiment',
         controller: 'ExperimentController',
