@@ -167,6 +167,8 @@ jTextMinerApp.controller('ThirdTabController', function (
             var results = response;
             $scope.featuresData = results;
             $scope.UpdateDataForRun();
+            InProgressService.updateIsReady(0);
+
             APIService.apiRun({ crud: 'RunSegmentation' }, $scope.dataRun, function (response) {
                 InProgressService.updateIsReady(1);
                 var results = response;
@@ -182,7 +184,8 @@ jTextMinerApp.controller('ThirdTabController', function (
         if (!angular.isUndefined($scope.resultData)) {
             ExperimentService.updateResultData($scope.resultData);
             if ($scope.resultData.length != []) {
-                $location.path('ResultsSegmentation');
+                $scope.htmlSegmentation = $sce.trustAsHtml($scope.resultData.htmlSegmentation);
+                //$location.path('ResultsSegmentation');
             }
         }
     });
