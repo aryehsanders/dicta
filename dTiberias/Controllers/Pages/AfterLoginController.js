@@ -1,11 +1,14 @@
 ﻿
 jTextMinerApp.controller('AfterLoginController', function ($scope, ngDialog, ExperimentService, $location, APIService, focus, AlertsService, InProgressService, $filter, ClassificationService, FeatureService, ClassService, SelectClassService, SaveClassInterface) {
+
+    $scope.isShow = false;
+
     $scope.currentUser = ExperimentService.user;
     $scope.showSignUp = $scope.currentUser === 'user';
     if (ExperimentService.isNewExperiment)
         ExperimentService.isNewExperiment = false;
 
-    if (ExperimentService.user == 'none')
+    if (ExperimentService.user == 'user')
         $location.path('Login');
 
 
@@ -197,18 +200,9 @@ jTextMinerApp.controller('AfterLoginController', function ($scope, ngDialog, Exp
 
     }
 
-    $scope.LoginDlg = function () {
-        ngDialog.openConfirm({
-            template: 'partials/Dialogs/partial-Login.html',
-            controller: 'DlgLoginController',
-            className: 'ngdialog-theme-default',
-            scope: $scope
-        }).then(function (value) {
-            //console.log('Modal promise resolved. Value: ', value);
-        }, function (reason) {
-            console.log('Modal promise rejected. Reason: ', reason);
-        });
-    }
+   
     
+
+
 });
 

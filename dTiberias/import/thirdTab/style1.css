@@ -109,19 +109,12 @@ width: 1257px;*/}
 .feature table{}
 .feature table tr{}
 .feature table tr td{}
-.dot_circle{color:#72B7EE;font-size:20px}
-.dot_star{color:#35AE02;font-size:20px}
-.dot_Blue{color:#72B7EE;font-size:10px}
-.dot_Green{color:#35AE02;font-size:10px}
-.dot_Red {
+.dot_blue{color:#72B7EE;font-size:20px}
+.dot_green{color:#35AE02;font-size:20px}
+.dot_orange {
     color: #ff931e;
-    font-size: 10px;
+    font-size: 12px;
 }
-.dot_Gray {
-    color: #F2F2F2;
-    font-size: 10px;
-}
-
 .footer_area{border-top: 3px solid #778b95;}
 .footer_content{float: right;
 padding: 30px 0;}

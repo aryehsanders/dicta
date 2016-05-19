@@ -13,7 +13,7 @@
         <span ng-show="item.tokenizerType=='Morphology'">morphology</span>
         <span ng-show="item.tokenizerType=='SyntaxClause'">Syntax clause</span>
         <span ng-show="item.tokenizerType=='SyntaxPhrase'">Syntax phrase</span>
-        <span ng-show="item.vocalized">vocalized</span>
+        <span ng-show="item.vocalized && item.tokenizerType=='Word'">vocalized</span>
         {{item.featureType | lowercase}}s
         
         <span ng-show="showDeleteButton" ng-click="deleteFeatureSet($index)" class="right-edit"> Delete</span>

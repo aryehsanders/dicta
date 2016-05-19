@@ -71,10 +71,10 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="item in featuresData.features | orderBy:predicate:reverse | filter:maxTTestFilter">
+        <tr ng-repeat="item in featuresData.features | orderBy:predicate:reverse | filter:maxTTestFilter"  class="{{item.color}}">
             <td><span class="font_12">{{$index+1}}</span></td>
             <td><input ng-disabled="{{isSelectDisabled}}" ng-click="updateTotalNumberOfFeatures(item);" type="checkbox" ng-model="item.selected" /></td>
-            <td><span title="{{item.title}}" class="{{item.color}}">{{item.name}}</span></td>
+            <td><span title="{{item.title}}" >{{item.name}}</span></td>
             <td>{{item.average | number : 2}}</td>
 
             <td ng-show="isMoreDetails">{{item.variance | number : 2}}</td>
@@ -84,7 +84,7 @@
             <td ng-repeat="oneclass in featuresData.classes"> {{item.tTestForEachClass[$index] | number : 2}} </td>
             <td ng-repeat="oneclass in featuresData.classes" ng-show="isMoreDetails"> {{item.documentFrequencyForEachClass[$index] | number : 2}} </td>
             <td>{{item.maxTTest | number : 2}}</td>
-            <td class="{{item.color}}">{{item.className}}</td>
+            <td>{{item.className}}</td>
             <td>{{item.infogain | number : 2}}</td>
             <td>{{Feature_sets[item.featureSetId].tokenizerType}}</td>
         </tr>

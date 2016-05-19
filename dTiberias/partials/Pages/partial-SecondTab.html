@@ -18,8 +18,8 @@
             </div>
             <div class="col-md-4 menu-mid">
                 <ul>
-                    <li><a href="#">Experiments</a></li>
-                    <li><a href="#">Collections</a></li>
+                    <li><a ng-show="isShow" href="#">Experiments</a></li>
+                    <li><a ng-show="isShow" href="#">Collections</a></li>
                 </ul>
             </div>
             <div class="col-md-4 menu-signup">
@@ -38,7 +38,7 @@
         <div class="col-md-6 new-e-right">
 
             <ul>
-                <li><p>Auto-saved on 11:34</p></li>
+                <li ng-show="isShow"><p>Auto-saved on 11:34</p></li>
                 <li><a ng-click="SaveExperiment();">Save As...</a></li>
                 <li><a href="#">Exports  <span class="fa fa-caret-down"></span></a></li>
             </ul>
@@ -66,7 +66,7 @@
                         <img src="import/secondTab/images/info.png" alt="" />
                         <a href="#">Edit</a>
                     </h3>
-                    <div class="deut-icon">
+                    <div ng-show="isShow" class="deut-icon">
                         <ul>
                             <li><img src="import/secondTab/images/genre.png" alt="" /> <span>Prose</span></li>
                             <li><img src="import/secondTab/images/period.png" alt="" /> <span>Biblical</span></li>
@@ -79,7 +79,7 @@
 
                     <ul>
 
-                        <li><a href="#"> <span><img src="import/secondTab/images/plus.png" alt="" /></span> Segment</a></li>
+                        <li><a ng-click="GoToThirdTab()"> <span><img src="import/secondTab/images/plus.png" alt="" /></span> Segment</a></li>
 
                     </ul>
 
@@ -235,7 +235,7 @@
                                         </table>
                                         <div class="view-text-content">
                                             <div ng-repeat="oneclass in classes">
-                                                <div class="content-describe {{indexOfColor(oneclass.title)}}">
+                                                <div class="content-describe">
 
                                                     <div class="class-table2 class-table-content">
                                                         <h4>{{oneclass.title}}</h4>
@@ -248,7 +248,17 @@
                                                                 <td class="reprencented-content"  title="{{feature.title}}">{{feature.name}}</td>
                                                                 <td class="occur-content">{{feature.numberOfAppearancesInDoc | number: 0}}</td>
                                                                 <td class="frequenct-content">
-                                                                    |
+                                                                    <ttest-slider feature-id='reprencented_{{indexOfColor(oneclass.title)}}{{testFile.name | removeDot}}{{$index}}'
+                                                                        currentvalue='{{feature.freqInDoc}}'
+                                                                        classaverage='{{feature.averageForEachClass[oneclass.title]}}'
+                                                                        otheraverage='{{feature.freqInOthers}}'
+                                                                        ttest='{{feature.tTestForEachClass[oneclass.title]}}'          
+                                                                        classcolor='{{indexOfColor(oneclass.title)}}'
+                                                                    ></ttest-slider>
+                                                                </td>
+                                                                <!--
+                                                                <td class="frequenct-content">
+                                                                     |
                                                                     {{beforeOther(feature.averageForEachClass[oneclass.title], feature.freqInOthers, feature.freqInDoc, feature.tTestForEachClass[oneclass.title])}}
                                                                     <span title="{{feature.freqInOthers}}" class="dot_blue">
                                                                         <img src="import/secondTabFeaturesView/images/circle.png" />
@@ -262,6 +272,7 @@
                                                                     {{afterClass(feature.averageForEachClass[oneclass.title], feature.freqInOthers, feature.freqInDoc, feature.tTestForEachClass[oneclass.title])}} 
                                                                     |
                                                                 </td>
+                                                                -->
                                                                 <!--
                                                                 <td class="frequenct-content">
                                                                     |
@@ -294,6 +305,15 @@
                                                                 <td class="reprencented-content" title="{{feature.title}}">{{feature.name}}</td>
                                                                 <td class="occur-content">{{feature.numberOfAppearancesInDoc | number: 0}}</td>
                                                                 <td class="frequenct-content">
+                                                                    <ttest-slider feature-id='missing_{{indexOfColor(oneclass.title)}}{{testFile.name | removeDot}}{{$index}}'
+                                                                                  currentvalue='{{feature.freqInDoc}}'
+                                                                                  classaverage='{{feature.averageForEachClass[oneclass.title]}}'
+                                                                                  otheraverage='{{feature.freqInOthers}}'
+                                                                                  ttest='{{feature.tTestForEachClass[oneclass.title]}}'
+                                                                                  classcolor='{{indexOfColor(oneclass.title)}}'></ttest-slider>
+                                                                </td>
+                                                                <!--
+                                                                <td class="frequenct-content">
                                                                     |
                                                                     {{beforeOther(feature.averageForEachClass[oneclass.title], feature.freqInOthers, feature.freqInDoc, feature.tTestForEachClass[oneclass.title])}}
                                                                     <span title="{{feature.freqInOthers}}" class="dot_blue">
@@ -308,6 +328,7 @@
                                                                     {{afterClass(feature.averageForEachClass[oneclass.title], feature.freqInOthers, feature.freqInDoc, feature.tTestForEachClass[oneclass.title])}}
                                                                     |
                                                                 </td>
+                                                                -->
                                                                 <td class="t-text-content">{{feature.tTestForEachClass[oneclass.title] | number : 2}}</td>
                                                                 <td class="infl-content">{{feature.influence | number : 2}}</td>
                                                             </tr>
@@ -350,10 +371,10 @@
 <footer class="footer">
     <div class="container">
         <div class="col-md-4 footer-left">
-            <p>Questions? <a href="#">Contact Us</a></p>
+            <p>Questions? <a ng-show="isShow" href="#">Contact Us</a></p>
         </div>
-        <div class="col-md-4 footer-mid">
-            <ul>
+        <div  class="col-md-4 footer-mid">
+            <ul ng-show="isShow">
                 <li><a href="#"><i class="fa fa-twitter"></i></a></li>
                 <li><a href="#"><i class="fa fa-facebook"></i></a></li>
 

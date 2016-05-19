@@ -9,7 +9,6 @@
 
 <in-progress></in-progress>
 
-
 <header class="header">
     <div class="container">
         <div class="nav-menu">
@@ -19,14 +18,14 @@
             <div class="col-md-4 menu-mid">
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="#">Our Product</a></li>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Team</a></li>
+                    <li><a ng-show="showSignUp" href="#">About Us</a></li>
+                    <li><a ng-show="showSignUp" href="#">Team</a></li>
                 </ul>
             </div>
-            <div ng-show="showSignUp" class="col-md-4 menu-signup">
+            <div class="col-md-4 menu-signup">
                 <ul class="nav navbar-nav navbar-right">
                     <li class="active">
-                        <a href="#">Sign Up</a>
+                        <a ng-show="showSignUp" href="#">Sign Up</a>
                     </li>
                     <li><a ng-click="LoginDlg();">Sign In</a></li>
                 </ul>
@@ -34,7 +33,7 @@
             <div ng-show="!showSignUp" class="col-md-4 menu-signup">
                 <ul class="nav navbar-nav navbar-right">
                     <li class="active">
-                        <a href="#">Hi {{currentUser}}</a>
+                        <a ng-show="showSignUp" href="#">Hi {{currentUser}}</a>
                     </li>
                 </ul>
             </div>
@@ -52,7 +51,7 @@
                 to find unknown matches, analyze authorship <br />
                 and resolve disputed classification
             </p>
-            <h3 ng-show="showSignUp">Already a member? <a href="#">Sign In</a></h3>
+            <h3>Already a member? <a ng-click="LoginDlg();">Sign In</a></h3>
         </div>
         <div ng-show="showSignUp" class="col-md-5 banner-right">
             <form class="form-horizontal">
@@ -104,9 +103,9 @@
     </div>
 </div>
 
-<div class="search">
+<div class="search" ng-show="showSignUp">
     <div class="container">
-        <h2>Search a team</h2>
+        <h2>Search a term</h2>
         <form class="form-horizonta">
             <div class="form-group-search">
                 <input type="search" class="form-control3" id="inputsearch" placeholder="input any text or concept">
@@ -116,7 +115,7 @@
     </div>
 </div>
 
-<div class="c-text">
+<div class="c-text" ng-show="showSignUp">
     <div class="container">
         <h2>Compare Texts</h2>
         <div class="btn-text">
@@ -131,12 +130,12 @@
 <footer class="footer">
     <div class="container">
         <div class="col-md-4 footer-left">
-            <p>Questions? <a href="#">Contact Us</a></p>
+            <p>Questions? <a ng-show="showSignUp" href="#">Contact Us</a></p>
         </div>
         <div class="col-md-4 footer-mid">
             <ul>
-                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                <li><a ng-show="showSignUp" href="#"><i class="fa fa-facebook"></i></a></li>
+                <li><a ng-show="showSignUp" href="#"><i class="fa fa-twitter"></i></a></li>
             </ul>
         </div>
         <div class="col-md-4 footer-right">

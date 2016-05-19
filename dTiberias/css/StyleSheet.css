@@ -69,3 +69,23 @@
 .padding {
     padding:10px 30px;
 }
+
+
+        #Red .slider-selection {
+	            background: #ffe9d2;
+            }
+        #Red .slider-handle {
+	        background: #ffe9d2;
+        }
+        #Green .slider-selection {
+	            background: #e4f4d9;
+            }
+        #Green .slider-handle {
+	        background: #e4f4d9;
+        }
+        #Blue .slider-selection {
+	            background: #8EC3EA;
+            }
+        #Blue .slider-handle {
+	        background: #8EC3EA;
+        }

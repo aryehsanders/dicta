@@ -1,7 +1,7 @@
 ﻿
 jTextMinerApp.controller('LoginController', function ($scope, ngDialog, ExperimentService, $location, APIService, focus, AlertsService, InProgressService, $filter, ClassificationService, FeatureService, ClassService, SelectClassService, SaveClassInterface) {
     $scope.currentUser = ExperimentService.user;
-    $scope.showSignUp = $scope.currentUser === 'user';
+    $scope.showSignUp = false; //$scope.currentUser === 'user';
     if (ExperimentService.isNewExperiment)
         ExperimentService.isNewExperiment = false;
 

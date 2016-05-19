@@ -1,7 +1,16 @@
 ﻿
 jTextMinerApp.controller('SecondTabController', function ($scope, ExperimentService, $location, focus, APIService, $filter, AlertsService, ClassificationService, FeatureService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce, ngDialog) {
 
+    $scope.GoToThirdTab = function () {
+        $location.path('ThirdTab');
+    }
+
     $scope.userLogin = ExperimentService.user;
+
+    if (ExperimentService.user == 'user')
+        $location.path('Login');
+
+    $scope.isShow = false;
 
     $scope.colors = ClassService.colors;
     $scope.indexOfColor = function (val) {
@@ -14,6 +23,7 @@ jTextMinerApp.controller('SecondTabController', function ($scope, ExperimentServ
         return "Grey";
     }
     $scope.tTestScale = 4;
+   
 
     $scope.beforeOther = function (avg, other, val, ttest) {
         
