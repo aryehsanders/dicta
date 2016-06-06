@@ -42,7 +42,20 @@ jTextMinerApp.factory("APIService", function ($resource) {
         }
     );
 });
-jTextMinerApp.factory('ExperimentService', function ($rootScope, ClassificationService, SegmentationService, FeatureService, APIService, $location, InProgressService, ClassService) {
+
+
+jTextMinerApp.factory("CAPIService", function ($resource) {
+    var url = "http://www.dictaparallelsserver.com/api";
+   
+    return $resource(url + "/:crud/:secondParam",
+        { crud: "@crud", secondParam: "@secondParam" },
+        {
+            "apiRun": { method: 'POST', isArray: false }
+        }
+    );
+});
+
+jTextMinerApp.factory('ExperimentService', function ($rootScope, ClassificationService, SegmentationService, FeatureService, APIService, $location, InProgressService, ClassService, SelectClassService) {
     var service = {};
 
     service.baseUrl = "http://ec2-52-58-29-166.eu-central-1.compute.amazonaws.com:80/WebServiceJTextMinerNewRoot2/api/JTextMinerAPI";
@@ -130,6 +143,10 @@ jTextMinerApp.factory('ExperimentService', function ($rootScope, ClassificationS
         this.data.corpusClasses = ClassService.Corpus_classes;
 
         this.data.featuresData = FeatureService.featuresData;
+
+        this.data.selectTestTextKeys = SelectClassService.lastTestSetSelectedRootKeys;
+        this.data.cvResultData = this.cvResultData;
+        this.data.tsResultData = this.tsResultData;
     }
 
     service.SaveExperiment = function () {
@@ -180,6 +197,16 @@ jTextMinerApp.factory('ExperimentService', function ($rootScope, ClassificationS
     }
 
     // Results
+    service.cvResultData = [];
+    service.updateCvResultData = function (value) {
+        this.cvResultData = value;
+        $rootScope.$broadcast("cvResultDataUpdated");
+    }
+    service.tsResultData = [];
+    service.updateTsResultData = function (value) {
+        this.tsResultData = value;
+        $rootScope.$broadcast("tsResultDataUpdated");
+    }
     service.resultData = [];
     service.updateResultData = function (value) {
         this.resultData = value;

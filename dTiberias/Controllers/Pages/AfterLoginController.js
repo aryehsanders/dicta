@@ -106,7 +106,7 @@ jTextMinerApp.controller('AfterLoginController', function ($scope, ngDialog, Exp
                         if (response.userLogin.length != 0) {
                             AlertsService.determineAlert({ msg: 'NewExperiment', type: 'success' });
                             //$location.path($scope.ExperimentTypeModel);
-                            $location.path('SecondTab');
+                            $location.path('FirstTab');
                         }
                         else
                             AlertsService.determineAlert({ msg: 'There is such exp name', type: 'success' });
@@ -129,7 +129,7 @@ jTextMinerApp.controller('AfterLoginController', function ($scope, ngDialog, Exp
                         APIService.apiRun({ crud: 'Extract' }, $scope.data, function (response) {
                             var results = response;
                             //$location.path($scope.ExperimentTypeModel);
-                            $location.path('SecondTab');
+                            $location.path('FirstTab');
                         });
 
                     });
@@ -172,6 +172,13 @@ jTextMinerApp.controller('AfterLoginController', function ($scope, ngDialog, Exp
         ClassService.Corpus_classes = data.corpusClasses;
 
         FeatureService.updateFeaturesData(data.featuresData);
+
+        SelectClassService.lastTestSetSelectedRootKeys = data.selectTestTextKeys;
+
+        ExperimentService.updateCvResultData(data.cvResultData);
+        ExperimentService.updateTsResultData(data.tsResultData);
+
+
     }
     $scope.UpdateExtractFeaturesData = function () {
         $scope.data = {};

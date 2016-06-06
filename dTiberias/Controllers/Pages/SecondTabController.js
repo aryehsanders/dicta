@@ -328,10 +328,12 @@ jTextMinerApp.controller('SecondTabController', function ($scope, ExperimentServ
                     //Test set
                     $scope.Classification_ExperimentType = 'TestSet';
                     ClassificationService.updateClassification_ExperimentTypeValue($scope.Classification_ExperimentType);
-                    $scope.CVResultData = response;
+                    
+                    ExperimentService.updateCvResultData(response);
                     $scope.UpdateDataForGettingResult();
                     APIService.apiRun({ crud: 'RunClassification' }, $scope.data, function (response2) {
                         InProgressService.updateIsReady(1);
+                        ExperimentService.tsResultData = response2;
                         $scope.TSResultData = response2;
                         $scope.testSetChunks = [];
                         for (testFileIndex in $scope.TSResultData.testSetResults) {
@@ -350,7 +352,30 @@ jTextMinerApp.controller('SecondTabController', function ($scope, ExperimentServ
 
 
     }
-
+    $scope.CVResultData = ExperimentService.cvResultData;
+    $scope.$on('cvResultDataUpdated', function () {
+        $scope.CVResultData = ExperimentService.cvResultData;
+    });
+    $scope.TSResultData = ExperimentService.tsResultData;
+    $scope.$on('tsResultDataUpdated', function () {
+        $scope.TSResultData = ExperimentService.tsResultData;
+        $scope.testSetChunks = [];
+        for (testFileIndex in $scope.TSResultData.testSetResults) {
+            $scope.testSetChunks.push($scope.TSResultData.testSetResults[testFileIndex]);
+        }
+        if ($scope.testSetChunks.length > 0)
+        {
+            $scope.data = {};
+            $scope.data.userLogin = ExperimentService.user;
+            $scope.data.index = 0;
+            $scope.currentIndex = 0;
+            APIService.apiRun({ crud: 'TestFileData' }, $scope.data, function (response) {
+                InProgressService.updateIsReady(1);
+                var results = response;
+                $scope.legend = $sce.trustAsHtml(results.legend);
+            });
+        }
+    });
     $scope.UpdateDataForGettingResult = function () {
         $scope.data = {};
         $scope.data.userLogin = ExperimentService.user;
@@ -379,7 +404,7 @@ jTextMinerApp.controller('SecondTabController', function ($scope, ExperimentServ
     $scope.cv_predicate = 'className';
     $scope.cv_predicate = '-maxTTest';
 
-    $scope.CVResultData = ExperimentService.resultData;
+    //$scope.CVResultData = ExperimentService.resultData;
     $scope.$on('valuesUpdated', function () {
         //$scope.resultData = ExperimentService.resultData;
         //$scope.htmlSegmentation = $sce.trustAsHtml($scope.resultData.htmlSegmentation);
@@ -427,9 +452,21 @@ jTextMinerApp.controller('SecondTabController', function ($scope, ExperimentServ
         $scope.showInProcess = InProgressService.isReady != 1;
     });
 
-    
-
     $scope.testSetChunks = [];
+    for (testFileIndex in $scope.TSResultData.testSetResults) {
+        $scope.testSetChunks.push($scope.TSResultData.testSetResults[testFileIndex]);
+    }
+    if ($scope.testSetChunks.length > 0) {
+        $scope.data = {};
+        $scope.data.userLogin = ExperimentService.user;
+        $scope.data.index = 0;
+        $scope.currentIndex = 0;
+        APIService.apiRun({ crud: 'TestFileData' }, $scope.data, function (response) {
+            InProgressService.updateIsReady(1);
+            var results = response;
+            $scope.legend = $sce.trustAsHtml(results.legend);
+        });
+    }
     $scope.setSelectedTestFile = function (item, index) {
 
         $scope.inited = false;
@@ -443,7 +480,7 @@ jTextMinerApp.controller('SecondTabController', function ($scope, ExperimentServ
         APIService.apiRun({ crud: 'TestFileData' }, $scope.data, function (response) {
             InProgressService.updateIsReady(1);
             var results = response;
-            item.htmlText = $sce.trustAsHtml(results.htmlText);
+            item.htmlText = results.htmlText;
             item.featureList = results.features;
             $scope.testSetChunks.push(item);
 
@@ -455,7 +492,9 @@ jTextMinerApp.controller('SecondTabController', function ($scope, ExperimentServ
         $scope.inited = true;
     };
     $scope.tab = '1';
-
+    $scope.convert2TrustAsHtml = function (text) {
+        return $sce.trustAsHtml(text);
+    };
 
     // advanced  - algorithems
     $scope.OpenSelectAlgorithm = function () {
