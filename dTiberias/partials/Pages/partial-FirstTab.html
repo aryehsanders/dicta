@@ -90,7 +90,7 @@
             <div class="box-body-bg">
                 <div class="col-md-4">
 
-                    <div class="box-left-side">
+                    <div  ng-show="!showInProcess"  class="box-left-side">
 
                         <div class="box-in">
                             <h2><a href="#">In all collections<span class="fa fa-caret-down"></span></a></h2>
@@ -99,9 +99,9 @@
                         </div>
 
                         <div class="box-found">
-                            <h3>Found 124 parallels</h3>
+                            <h3>Found {{numOfParallels}} parallels</h3>
 
-                            <div class="box-fexo">
+                            <div ng-show="false" class="box-fexo">
                                 <ul>
                                     <li><h2>Exodus</h2> <small>Most similar overall</small></li>
                                     <li><h2>83%</h2><small>Similarity</small></li>
@@ -112,99 +112,44 @@
                         </div>
                         <div class="box-bys">
                             <h3>By source  |  <span>By location</span></h3>
-                            <ul>
-                                <li><h2>Bible > Number</h2></li>
-                                <li><a href="#">13 parallels <i class="fa fa-caret-down"></i></a></li>
+                            <ul ng-repeat="group in groups">
+                                <li><h2>{{group.name}}</h2></li>
+                                <li><a ng-click="updateGroupIndex($index)">{{group.numOfParallels}} parallels <i class="fa fa-caret-down"></i></a></li>
+                                <div ng-show="$index == currentGroupIndex" class="box-contens yellow">
+                                    <div ng-repeat="parallel in group.parallels">
+                                        <ul>
+                                            <li style="float:right;"><h2>{{parallel.parallelTitle}}</h2></li>
+                                            <li><small> parallel in - chunk {{parallel.chunkIndex}}</small></li>
+                                        </ul>
+                                        <p style="direction:rtl;">
+                                            {{parallel.parallelText}}
+                                        </p>
+                                    </div>
+                                    
+
+                                </div>
                             </ul>
-                            <div class="box-gol">
-
-                                <ul>
-                                    <li><h2>Talmud > Nashim > Yebamoth</h2></li>
-                                    <li><a href="#">9 parallels <i class="fa fa-caret-down"></i></a></li>
-                                </ul>
-                            </div>
-
-
-                            <ul>
-                                <li><h2 class="pas"> Bible  >  Kings  ||</h2></li>
-                                <li><a href="#">4 parallels <i class="fa fa-caret-down"></i></a></li>
-                            </ul>
-
-                            <div class="box-gol">
-                                <ul>
-                                    <li><h2>Talmud > Nashim > Yebamoth</h2></li>
-                                    <li><a href="#">3 parallels <i class="fa fa-caret-down"></i></a></li>
-                                </ul>
-                            </div>
-
-
-                            <ul>
-                                <li><h2>Bible > Numbers</h2></li>
-                                <li><a href="#">2 parallels <i class="fa fa-caret-down"></i></a></li>
-                            </ul>
-
+                           
                         </div>
 
 
-                        <div class="box-contens yellow">
-                            <ul>
-                                <li><h2>Numbers 3, 5-7</h2></li>
-                                <li><small> parallel in - chunk 5</small></li>
-                            </ul>
-                            <p>
-                                Text Text Text Text Text Text Text Text Text
-                                Text Text Text Text Text Text Text Text Text
-                                Text Text Text Text Text Text Text Text Text
-                                Text Text Text Text Text Text Text Text Text
-                            </p>
-
-                            <!-- 2nd -->
-
-                            <ul>
-                                <li><h2>Numbers 5, 1-1</h2></li>
-                                <li><small> parallel in - chunk 21</small></li>
-                            </ul>
-                            <p>
-                                Text Text Text Text Text Text Text Text Text
-                                Text Text Text Text Text Text Text Text Text
-                            </p>
-
-                        </div>
+                        
                     </div>
                 </div>
 
 
                 <div class="col-md-7">
-                    <div class="box-right-side">
+                    <in-progress></in-progress>
+
+                    <div ng-show="!showInProcess" ng-repeat="chunk in chunks" class="box-right-side">
                         <div class="border-box">
                             <h2>Deutoronomy 1, chapter 1</h2>
-                            <p class="line-h">
-                                Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
-                                Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
-                                Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
-                                Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
-                                Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
-                                Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
-                                Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
-                                Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
+                            <p style="direction:rtl;" class="line-h">
+                                {{chunk}}
                             </p>
                         </div>
                     </div>
 
-
-                    <div class="box-right-side">
-                        <div class="border-box">
-                            <div class="yellow">
-                                <h2>Deutoronomy 1, chapter 1</h2>
-                                <p>
-                                    Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
-                                    Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
-                                    Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
-                                    Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
-                                </p>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="col-md-1">

@@ -31,8 +31,8 @@ jTextMinerApp.service('fileUpload', ['$http', 'InProgressService', '$location', 
 
 
 jTextMinerApp.factory("APIService", function ($resource) {
-    var url = "http://ec2-52-58-29-166.eu-central-1.compute.amazonaws.com:80/WebServiceJTextMinerNewRoot2/api/JTextMinerAPI";
-    //url = "http://localhost:8080/NewWebSite/api/JTextMinerAPI";
+    var url = "http://ec2-52-58-29-166.eu-central-1.compute.amazonaws.com:80/WebServiceJTextMinerNewRoot3/api/JTextMinerAPI";
+    url = "http://localhost:8080/NewWebSite/api/JTextMinerAPI";
 
     return $resource(url + "/:crud/:secondParam",
         { crud: "@crud", secondParam: "@secondParam" },
@@ -50,7 +50,7 @@ jTextMinerApp.factory("CAPIService", function ($resource) {
     return $resource(url + "/:crud/:secondParam",
         { crud: "@crud", secondParam: "@secondParam" },
         {
-            "apiRun": { method: 'POST', isArray: false }
+            "apiRun": { method: 'POST', isArray: true }
         }
     );
 });
@@ -58,8 +58,8 @@ jTextMinerApp.factory("CAPIService", function ($resource) {
 jTextMinerApp.factory('ExperimentService', function ($rootScope, ClassificationService, SegmentationService, FeatureService, APIService, $location, InProgressService, ClassService, SelectClassService) {
     var service = {};
 
-    service.baseUrl = "http://ec2-52-58-29-166.eu-central-1.compute.amazonaws.com:80/WebServiceJTextMinerNewRoot2/api/JTextMinerAPI";
-    //service.baseUrl = "http://localhost:8080/NewWebSite/api/JTextMinerAPI";
+    service.baseUrl = "http://ec2-52-58-29-166.eu-central-1.compute.amazonaws.com:80/WebServiceJTextMinerNewRoot3/api/JTextMinerAPI";
+    service.baseUrl = "http://localhost:8080/NewWebSite/api/JTextMinerAPI";
 
     service.user = 'user';
     service.updateUser = function (value) {
