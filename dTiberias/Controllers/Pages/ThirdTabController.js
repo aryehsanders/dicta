@@ -38,7 +38,6 @@ jTextMinerApp.controller('ThirdTabController', function (
         });
     }
 
-    ExperimentService.updateExperimentTypeModelValue('Segmentation');
     $scope.ExperimentTypeModel = ExperimentService.ExperimentTypeModel;
     $scope.$watch('ExperimentTypeModel', function () {
         ExperimentService.updateExperimentTypeModelValue($scope.ExperimentTypeModel);
@@ -160,22 +159,35 @@ jTextMinerApp.controller('ThirdTabController', function (
             $scope.data.select_RootKeys = selRootKeys;
         }*/
 
+        ExperimentService.updateExperimentTypeModelValue('Segmentation');
 
-        $scope.UpdateDataForExtract();
+        //UnknownTestClass
+        var classData = SaveClassInterface; // {};
+        InProgressService.updateIsReady(0);
+        if (angular.equals(classData.actionMode, 'SelectOnlineCorpus')) {
+            classData.select_RootKeys = SelectClassService.lastTestSetSelectedRootKeys;
+        }
 
-        APIService.apiRun({ crud: 'Extract' }, $scope.dataExtract, function (response) {
-            var results = response;
-            $scope.featuresData = results;
-            $scope.UpdateDataForRun();
-            InProgressService.updateIsReady(0);
+        classData.expType = 'Segmentation';
+        APIService.apiRun({ crud: 'UnknownTestClass' }, classData, function (response) {
+            $scope.UpdateDataForExtract();
 
-            APIService.apiRun({ crud: 'RunSegmentation' }, $scope.dataRun, function (response) {
-                InProgressService.updateIsReady(1);
+            APIService.apiRun({ crud: 'Extract' }, $scope.dataExtract, function (response) {
                 var results = response;
-                $scope.resultData = results;
-            });
+                $scope.featuresData = results;
+                $scope.UpdateDataForRun();
+                InProgressService.updateIsReady(0);
 
+                APIService.apiRun({ crud: 'RunSegmentation' }, $scope.dataRun, function (response) {
+                    InProgressService.updateIsReady(1);
+                    var results = response;
+                    $scope.resultData = results;
+                });
+
+            });
         });
+
+        
 
     }
 

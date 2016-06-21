@@ -2,7 +2,7 @@
 jTextMinerApp.controller('AfterLoginController', function ($scope, ngDialog, ExperimentService, $location, APIService, focus, AlertsService, InProgressService, $filter, ClassificationService, FeatureService, ClassService, SelectClassService, SaveClassInterface, ParallelsService, CAPIService) {
 
     $scope.isShow = false;
-
+    ExperimentService.updateExperimentTypeModelValue("Classification");
     $scope.currentUser = ExperimentService.user;
     if (ExperimentService.isNewExperiment)
         ExperimentService.isNewExperiment = false;
@@ -115,7 +115,7 @@ jTextMinerApp.controller('AfterLoginController', function ($scope, ngDialog, Exp
                         $scope.UpdateData(response);
                         FeatureService.updateTotalNumberOfFeatures(null);
                         $scope.UpdateExtractFeaturesData();
-                        APIService.apiRun({ crud: 'Extract' }, $scope.data, function (response) {
+                        APIService.apiRun({ crud: 'ExtractFeaturesClassification' }, $scope.data, function (response) {
                             var results = response;
                             //$location.path($scope.ExperimentTypeModel);
                             $scope.GoToNextTab();
@@ -139,6 +139,7 @@ jTextMinerApp.controller('AfterLoginController', function ($scope, ngDialog, Exp
 
     $scope.data = {};
     $scope.data.userLogin = ExperimentService.user;
+
     $scope.data.expType = ExperimentService.ExperimentTypeModel;
     APIService.apiGetArray({ crud: 'GetUploadStoredExperiments' }, $scope.data, function (response) {
         $scope.fileNameList = response;
@@ -218,6 +219,15 @@ jTextMinerApp.controller('AfterLoginController', function ($scope, ngDialog, Exp
         APIService.apiGetArray({ crud: 'UnknownTestClassAsChunks' }, classData, function (response) {
             $scope.data.chunks = response;
             ParallelsService.updateChunks(response);
+            $scope.parrallelsPerChunk = [];
+            for (i = 0; i < ParallelsService.chunks.length; i = i + 1) {
+                $scope.parrallelsPerChunk.push(
+                    {
+                        name: "Chunk " + i,
+                        parallels: []
+                    }
+                );
+            }
             CAPIService.apiRun({ crud: 'parallels' }, $scope.data, function (response2) {
                 $scope.results = response2;
                 $scope.groupNames = [];
@@ -238,7 +248,6 @@ jTextMinerApp.controller('AfterLoginController', function ($scope, ngDialog, Exp
                                 numOfParallels: 1,
                                 parallels: []
                             });
-
                         }
                         else {
                             $scope.groups[$scope.groupNames.indexOf(group)].numOfParallels += 1;
@@ -250,10 +259,21 @@ jTextMinerApp.controller('AfterLoginController', function ($scope, ngDialog, Exp
 
                         $scope.groups[$scope.groupNames.indexOf(group)].parallels.push({
                             chunkIndex: k,
+                            chunkText: currentData.baseMatchedText,
                             parallelText: currentData.compMatchedText,
-                            parallelTitle: title
+                            parallelTitle: title,
+                            //startCharecterIndex: currentData.baseStartChar,
+                            //length: currentData.baseTextLength
                         });
-
+                        
+                        $scope.parrallelsPerChunk[k].parallels.push(
+                            {
+                                chunkIndex: k,
+                                chunkText: currentData.baseMatchedText,
+                                parallelText: currentData.compMatchedText,
+                                parallelTitle: title,
+                            }
+                        );
 
                     }
                 }
@@ -262,9 +282,10 @@ jTextMinerApp.controller('AfterLoginController', function ($scope, ngDialog, Exp
                 ParallelsService.updategroups($scope.groups);
                 ParallelsService.updatenumOfParallelsInGroups($scope.numOfParallelsInGroups);
                 ParallelsService.updatenumOfParallels($scope.numOfParallels);
+                ParallelsService.updateparrallelsPerChunk($scope.parrallelsPerChunk);
 
                 InProgressService.updateIsReady(1);
-                $location.path('FirstTab');
+                $location.path('Tabs');
             });
         });
         

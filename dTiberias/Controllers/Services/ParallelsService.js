@@ -27,7 +27,11 @@ jTextMinerApp.factory('ParallelsService', function ($rootScope) {
         this.numOfParallels = val;
         $rootScope.$broadcast("ParallelsUpdates");
     }
-
+    root.parrallelsPerChunk = [];
+    root.updateparrallelsPerChunk = function (val) {
+        this.parrallelsPerChunk = val;
+        $rootScope.$broadcast("ParallelsUpdates");
+    }
 
     return root;
 });
