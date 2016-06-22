@@ -2,12 +2,68 @@
     return {
         restrict: 'AE',
         templateUrl: 'partials/templates/SelectOnlineCorpusTemplate.html',
-        controller: ['$scope', function ($scope) {
+        controller: ['$scope', '$http', function ($scope, $http) {
             $scope.Select_OnlineCorpus = 'Bible';
+
             $scope.showBibleDialog = true;
             $scope.OpenSelectBible = function () {
                 $scope.showBibleDialog = true;
+                $scope.showTalmudDialog = false;
             };
+            $scope.showTalmudDialog = false;
+            $scope.OpenSelectTalmud = function () {
+                $scope.showBibleDialog = false;
+                $scope.showTalmudDialog = true;
+            };
+
+            $scope.breadCrumbs = ['All Collections'];
+
+            $http.get('corpusTree.json').then(function(response) {
+                $scope.corpusTree = response.data;
+                $scope.treeNode = $scope.corpusTree;
+            });
+
+            $scope.expandNode = function (itemTitle) {
+                var currentNode = $scope.treeNode;
+                for (var i=0; i < currentNode.length; i++) {
+                    if (currentNode[i]['title'] == itemTitle) {
+                        $scope.treeNode = currentNode[i]['children'];
+                        $scope.breadCrumbs.push(itemTitle);
+                        break;
+                    }
+                }
+            };
+
+            // based on http://stackoverflow.com/questions/14514461/how-to-bind-to-list-of-checkbox-values-with-angularjs
+            // list selected nodes by key
+            $scope.selectedNodes = [];
+
+            // toggle selection for a given node by key
+            $scope.toggleSelection = function toggleSelection(itemKey) {
+                var idx = $scope.selectedNodes.indexOf(itemKey);
+
+                // is currently selected
+                if (idx > -1) {
+                    $scope.selectedNodes.splice(idx, 1);
+                }
+
+                // is newly selected
+                else {
+                    $scope.selectedNodes.push(itemKey);
+                }
+                $rootScope.$broadcast('lastSelectedRootKeys', $scope.selectedNodes);
+            };
+
+            $scope.selectCrumb = function (crumbNumber) {
+                var oldCrumbs = $scope.breadCrumbs;
+                $scope.breadCrumbs = ['All Collections'];
+                $scope.treeNode = $scope.corpusTree;
+                for (var i=1; i <= crumbNumber; i++) {
+                    $scope.expandNode(oldCrumbs[i]);
+                }
+
+            };
+
             // http://wwwendt.de/tech/dynatree/doc/dynatree-doc.html 
             $("#trainTree").dynatree({
                 checkbox: true,

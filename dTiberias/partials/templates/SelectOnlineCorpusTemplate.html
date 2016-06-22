@@ -9,8 +9,8 @@
     <label for="Select_BibleId">
         Bible
     </label>
-    <input disabled id="Select_BibleId" ng-click="OpenSelectBible();" type="radio" name="Select_OnlineCorpusGroup" ng-model="Select_OnlineCorpus" value="Talmud" />
-    <label for="Select_BibleId">
+    <input id="Select_TalmudId" ng-click="OpenSelectTalmud();" type="radio" name="Select_OnlineCorpusGroup" ng-model="Select_OnlineCorpus" value="Talmud" />
+    <label for="Select_TalmudId">
         Talmud
     </label>
     <input disabled id="Select_BibleId" ng-click="OpenSelectBible();" type="radio" name="Select_OnlineCorpusGroup" ng-model="Select_OnlineCorpus" value="Shakespeare" />
@@ -31,4 +31,27 @@
         <!-- http://wwwendt.de/tech/dynatree/doc/dynatree-doc.html -->
         <div id="trainTree"></div>
     </div>
+    <div ng-show="showTalmudDialog" style="height: 400px; overflow: scroll;">
+        <ol class="breadcrumb">
+            <li ng-repeat="crumb in breadCrumbs"><a href="#" ng-click="selectCrumb($index)">{{crumb}}</a></li>
+        </ol>
+        <table class="table table-striped">
+            <tr ng-repeat="item in treeNode">
+                <td width="30px"><input
+                        type="checkbox"
+                        name="selectedNodes[]"
+                        value="{{item.key}}"
+                        ng-checked="selectedNodes.indexOf(item.key) > -1"
+                        ng-click="toggleSelection(item.key)"
+                > </td>
+                <td ng-switch="item.children != null && item.children.length > 0">
+                    <a ng-switch-default href="#" ng-click="expandNode(item.title)">{{item.title}}
+                        <span class="glyphicon glyphicon-menu-right"></span></a>
+                    <span ng-switch-when="false">{{item.title}}</span>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
 </div>
