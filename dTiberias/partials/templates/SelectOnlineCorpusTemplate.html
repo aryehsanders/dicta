@@ -41,9 +41,12 @@
                         type="checkbox"
                         name="selectedNodes[]"
                         value="{{item.key}}"
-                        ng-checked="selectedNodes.indexOf(item.key) > -1"
+                        id="{{item.key}}"
+                        ng-checked="isNodeSelected(item.key)"
                         ng-click="toggleSelection(item.key)"
-                > </td>
+                        ui-indeterminate="isNodePartial(item.key)"
+                >
+                </td>
                 <td ng-switch="item.children != null && item.children.length > 0">
                     <a ng-switch-default href="#" ng-click="expandNode(item.title)">{{item.title}}
                         <span class="glyphicon glyphicon-menu-right"></span></a>

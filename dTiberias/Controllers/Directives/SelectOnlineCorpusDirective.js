@@ -16,47 +16,136 @@
                 $scope.showTalmudDialog = true;
             };
 
-            $scope.breadCrumbs = ['All Collections'];
+            function initBreadCrumbs() {
+                $scope.breadCrumbs = ['All Collections'];
+            }
+            initBreadCrumbs();
 
             $http.get('corpusTree.json').then(function(response) {
                 $scope.corpusTree = response.data;
                 $scope.treeNode = $scope.corpusTree;
+                initCurrentLevel(null);
             });
+
+            var keyToNode = {};
+
+            // based on http://stackoverflow.com/questions/14514461/how-to-bind-to-list-of-checkbox-values-with-angularjs
+            // list selected nodes by key
+            $scope.selectedNodes = [];
+
+            // to display an "indeterminate" checkbox if some key is partially selected
+            $scope.partialNodes = [];
+
+
+            function initCurrentLevel(parentNode) {
+                for (var i = 0; i < $scope.treeNode.length; i++) {
+                    // add links back to the parent, so we can update selections
+                    $scope.treeNode[i]['parent'] = parentNode;
+                    keyToNode[$scope.treeNode[i]['key']] = $scope.treeNode[i];
+                }
+            }
+
+            // end of tree setup; helper functions come next
 
             $scope.expandNode = function (itemTitle) {
                 var currentNode = $scope.treeNode;
                 for (var i=0; i < currentNode.length; i++) {
                     if (currentNode[i]['title'] == itemTitle) {
                         $scope.treeNode = currentNode[i]['children'];
+                        initCurrentLevel(currentNode[i]);
                         $scope.breadCrumbs.push(itemTitle);
                         break;
                     }
                 }
             };
 
-            // based on http://stackoverflow.com/questions/14514461/how-to-bind-to-list-of-checkbox-values-with-angularjs
-            // list selected nodes by key
-            $scope.selectedNodes = [];
+            // remove current item from array if 'ancestor' is an ancestor
+            function removeIfAncestor(arr, idx, ancestor) {
+                var current = keyToNode[arr[idx]];
+                while(current['parent'] != null) {
+                    if (current['parent'] === ancestor) {
+                        arr.splice(idx, 1);
+                        break;
+                    }
+                    current = current['parent'];
+                }
+            }
+
+            function recalculatePartials() {
+                $scope.partialNodes = [];
+                for (var i=0;i< $scope.selectedNodes.length; i++) {
+                    var parent = keyToNode[$scope.selectedNodes[i]]['parent'];
+                    while (parent != null) {
+                        if ($scope.partialNodes.indexOf(parent['key']) == -1)
+                            $scope.partialNodes.push(parent['key']);
+                        parent = parent['parent'];
+                    }
+                }
+            }
+
+            $scope.isNodeSelected = function isNodeSelected(node) {
+                var parent = keyToNode[node]['parent'];
+                return $scope.selectedNodes.indexOf(node) > -1 || (parent != null && isNodeSelected(parent['key']));
+            };
+
+            $scope.isNodePartial = function isNodePartial(node) {
+                return $scope.partialNodes.indexOf(node) > -1;
+            };
 
             // toggle selection for a given node by key
             $scope.toggleSelection = function toggleSelection(itemKey) {
-                var idx = $scope.selectedNodes.indexOf(itemKey);
-
-                // is currently selected
-                if (idx > -1) {
-                    $scope.selectedNodes.splice(idx, 1);
+                // is currently selected, so this deselects
+                if ($scope.isNodeSelected(itemKey)) {
+                    // currently selected itself?
+                    var idx = $scope.selectedNodes.indexOf(itemKey);
+                    if (idx > -1) {
+                        // yes, so remove it.
+                        $scope.selectedNodes.splice(idx, 1);
+                    }
+                    else {
+                        // select siblings and deselect ancestor
+                        var currentNode = keyToNode[itemKey];
+                        while ((idx = $scope.selectedNodes.indexOf(currentNode['key'])) == -1) {
+                            var children = currentNode['parent']['children'];
+                            for (var i = 0; i < children.length; i++)
+                                if (children[i] != currentNode)
+                                    $scope.selectedNodes.push(children[i]['key']);
+                            currentNode = currentNode['parent'];
+                        }
+                        $scope.selectedNodes.splice(idx, 1);
+                    }
                 }
-
                 // is newly selected
                 else {
+                    // select this
                     $scope.selectedNodes.push(itemKey);
+                    // check if all siblings are selected
+                    var parent = keyToNode[itemKey]['parent'];
+                    if (parent != null) {
+                        var sibCount = 0;
+                        var siblings = parent['children'];
+                        for (var i = 0; i < siblings.length; i++)
+                            if ($scope.selectedNodes.indexOf(siblings[i]['key']) > -1)
+                                sibCount++;
+                        // if so, select the parent
+                        if (sibCount == siblings.length)
+                            $scope.toggleSelection(parent['key']);
+
+                    }
                 }
+
+                // remove any descendants already selected
+                for (var i = $scope.selectedNodes.length - 1; i>=0; i--)
+                    removeIfAncestor($scope.selectedNodes, i, keyToNode[itemKey]);
+
+                recalculatePartials();
+
                 $rootScope.$broadcast('lastSelectedRootKeys', $scope.selectedNodes);
             };
 
             $scope.selectCrumb = function (crumbNumber) {
                 var oldCrumbs = $scope.breadCrumbs;
-                $scope.breadCrumbs = ['All Collections'];
+                initBreadCrumbs();
                 $scope.treeNode = $scope.corpusTree;
                 for (var i=1; i <= crumbNumber; i++) {
                     $scope.expandNode(oldCrumbs[i]);
