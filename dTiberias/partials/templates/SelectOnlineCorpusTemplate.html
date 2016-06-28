@@ -33,7 +33,7 @@
     </div>
     <div ng-show="showTalmudDialog" style="height: 400px; overflow: scroll;">
         <ol class="breadcrumb">
-            <li ng-repeat="crumb in breadCrumbs"><a href="#" ng-click="selectCrumb($index)">{{crumb}}</a></li>
+            <li ng-repeat="crumb in breadCrumbs"><a ng-click="selectCrumb($index)">{{crumb}}</a></li>
         </ol>
         <table class="table table-striped">
             <tr ng-repeat="item in treeNode">
@@ -48,7 +48,7 @@
                 >
                 </td>
                 <td ng-switch="item.children != null && item.children.length > 0">
-                    <a ng-switch-default href="#" ng-click="expandNode(item.title)">{{item.title}}
+                    <a ng-switch-default ng-click="expandNode(item.title)">{{item.title}}
                         <span class="glyphicon glyphicon-menu-right"></span></a>
                     <span ng-switch-when="false">{{item.title}}</span>
                 </td>
