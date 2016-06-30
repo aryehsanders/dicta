@@ -150,7 +150,7 @@
                                         </div>
 
                                         <div class="reprencented-section">
-                                            <p class="reprencented"><i class="fa fa-star"></i> Reprencented ({{(testFile.featureList | positiveInfluence: $index).length}})</p>
+                                            <p class="reprencented"><i class="fa fa-star"></i> Represented ({{(testFile.featureList | positiveInfluence: $index).length}})</p>
                                             <table>
                                                 <tr ng-repeat="feature in testFile.featureList | orderBy:test_predicate:reverse | orderBy:'-influence' | positiveInfluence: $index">
                                                     <td class="reprencented-content"  title="{{feature.title}}">{{feature.name}}</td>
