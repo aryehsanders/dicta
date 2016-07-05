@@ -220,6 +220,7 @@ jTextMinerApp.controller('AfterLoginController', function ($scope, ngDialog, Exp
         APIService.apiRun({ crud: 'UnknownTestClassAsChunks' }, classData, function (response) {
             $scope.data.chunks = response.chunks;
             ParallelsService.updateChunks(response.chunks);
+            $scope.source = response.source;
             ParallelsService.updateSource(response.source);
             $scope.parrallelsPerChunk = [];
             for (i = 0; i < ParallelsService.chunks.length; i = i + 1) {
@@ -243,6 +244,18 @@ jTextMinerApp.controller('AfterLoginController', function ($scope, ngDialog, Exp
                         var currentData = currentChunk.data[j];
                         var paths = currentData.compName.split(":");
                         var group = (paths[0] + " > " + paths[1]);
+                        var title = paths[0];
+                        var path = paths[0];
+                        for (i = 1; i < paths.length; i = i + 1) {
+                            title += " > " + paths[i];
+                            path += "/" + paths[i].trim();
+                        }
+
+                        if ($scope.source[k] === path)
+                            continue; // do  not add parallel of the same chunk
+
+
+
                         if ($scope.groupNames.indexOf(group) < 0) {
                             $scope.groupNames.push(group);
                             $scope.groups.push({
@@ -254,16 +267,13 @@ jTextMinerApp.controller('AfterLoginController', function ($scope, ngDialog, Exp
                         else {
                             $scope.groups[$scope.groupNames.indexOf(group)].numOfParallels += 1;
                         }
-                        var title = paths[0];
-                        for (i = 1; i < paths.length; i = i + 1) {
-                            title += " > " + paths[i];
-                        }
-
+                        
                         $scope.groups[$scope.groupNames.indexOf(group)].parallels.push({
                             chunkIndex: k,
                             chunkText: currentData.baseMatchedText,
                             parallelText: currentData.compMatchedText,
                             parallelTitle: title,
+                            parallelPath: path,
                             //startCharecterIndex: currentData.baseStartChar,
                             //length: currentData.baseTextLength
                         });
@@ -274,6 +284,7 @@ jTextMinerApp.controller('AfterLoginController', function ($scope, ngDialog, Exp
                                 chunkText: currentData.baseMatchedText,
                                 parallelText: currentData.compMatchedText,
                                 parallelTitle: title,
+                                parallelPath: path,
                             }
                         );
 

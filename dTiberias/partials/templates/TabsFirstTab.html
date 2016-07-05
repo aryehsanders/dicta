@@ -45,7 +45,7 @@
                 </div>
                 <div ng-show="chunkSelectedIndex != -1" class="box-bys">
                     <div class="box-contens yellow">
-                        <div  ng-repeat="parallel in parrallelsPerChunk[chunkSelectedIndex].parallels">
+                        <div ng-repeat="parallel in parrallelsPerChunk[chunkSelectedIndex].parallels">
                             <ul>
                                 <li style="float:right;"><h2>{{parallel.parallelTitle}}</h2></li>
                                 <li><small> parallel in - {{source[parallel.chunkIndex]}}</small></li>
