@@ -209,6 +209,7 @@ jTextMinerApp.controller('AfterLoginController', function ($scope, ngDialog, Exp
                 "בעי רב פפא: יש יד לקידושין או לא? היכי דמי? אילימא דאמר לה לאשה הרי את מקודשת לי, ואמר לחבירתה ואת נמי, פשיטא, היינו קידושין עצמן! אלא כגון דאמר לה לאשה הרי את מקודשת לי, ואמר לה לחבירתה ואת, מי אמרינן ואת נמי אמר לה לחבירתה, ותפסי בה קידושין לחבירתה, או דלמא ואת חזאי אמר לה לחבירתה, ולא תפסי בה קידושין בחבירתה? ומי מיבעי ליה לרב פפא? והא מדאמר ליה רב פפא לאביי: מי סבר שמואל ידים שאין מוכיחות הויין ידים? מכלל דסבירא ליה לרב פפא דיש יד לקידושין! חדא מגו מאי דסבירא ליה לשמואל אמר ליה לאביי. בעי רב פפא: יש יד לפאה, או אין יד לפאה? היכי דמי? אילימא דאמר הדין אוגיא ליהוי פאה והדין נמי, ההיא פיאה מעלייתא היא! כי קא מיבעיא ליה - כגון דאמר והדין ולא אמר נמי, מאי? מכלל דכי אמר שדה כולה תיהוי פאה הויא פאה! אין, והתניא: מנין שאם רוצה לעשות כל שדהו פאה עושה? ת'ל: +ויקרא יט+ פאת שדך; מי אמרינן כיון דאיתקש לקרבנות, מה קרבנות יש להם יד אף פאה יש לה יד, או דלמא כי איתקש - לבל תאחר הוא דאיתקש? והיכא איתקש? דתניא: ",
                 " רבי יהודה אומר: לא מן השם הוא זה, אלא אמר קרא: +במדבר ה+ אותה, לבדה. ות'ק, הכתיב: אותה! ת'ק ר'ש היא, דדריש טעם דקרא, ומה טעם קאמר, מה טעם אותה לבדה? כדי שלא יהא לבה גס בחבירתה. מאי בינייהו? איכא בינייהו רותתת. ורותתת מי משקין? והא אין עושין מצות חבילות חבילות! דתנן: אין משקין שתי סוטות כאחת, ואין מטהרין שני מצורעין כאחת, ואין רוצעין שני עבדים כאחת, ואין עורפין שתי עגלות כאחת, לפי שאין עושין מצות חבילות חבילות! אמר אביי, ואיתימא רב כהנא, לא קשיא: כאן בכהן אחד, כאן בשני כהנים. "
         ];
+        $scope.source = [];
         //UnknownTestClass
         var classData = SaveClassInterface; // {};
         InProgressService.updateIsReady(0);
@@ -216,9 +217,10 @@ jTextMinerApp.controller('AfterLoginController', function ($scope, ngDialog, Exp
             classData.select_RootKeys = SelectClassService.lastTestSetSelectedRootKeys;
         }
         classData.expType = 'Classification';
-        APIService.apiGetArray({ crud: 'UnknownTestClassAsChunks' }, classData, function (response) {
-            $scope.data.chunks = response;
-            ParallelsService.updateChunks(response);
+        APIService.apiRun({ crud: 'UnknownTestClassAsChunks' }, classData, function (response) {
+            $scope.data.chunks = response.chunks;
+            ParallelsService.updateChunks(response.chunks);
+            ParallelsService.updateSource(response.source);
             $scope.parrallelsPerChunk = [];
             for (i = 0; i < ParallelsService.chunks.length; i = i + 1) {
                 $scope.parrallelsPerChunk.push(

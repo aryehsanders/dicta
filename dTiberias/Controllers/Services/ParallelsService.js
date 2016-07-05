@@ -7,6 +7,12 @@ jTextMinerApp.factory('ParallelsService', function ($rootScope) {
         this.chunks = items;
         $rootScope.$broadcast("ParallelsUpdates");
     }
+    root.source = [];
+    root.updateSource = function (items) {
+        this.source = items;
+        $rootScope.$broadcast("ParallelsUpdates");
+    }
+
     root.groupNames = [];
     root.updategroupNames = function (items) {
         this.groupNames = items;

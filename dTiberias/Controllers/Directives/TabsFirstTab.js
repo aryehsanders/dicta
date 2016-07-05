@@ -15,6 +15,7 @@
             }
 
             $scope.chunks = ParallelsService.chunks;
+            $scope.source = ParallelsService.source;
             $scope.groupNames = ParallelsService.groupNames;
             $scope.groups = ParallelsService.groups;
             $scope.numOfParallelsInGroups = ParallelsService.numOfParallelsInGroups;
