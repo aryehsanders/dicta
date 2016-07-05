@@ -11,7 +11,10 @@
 
             $scope.currentGroupIndex = 0;
             $scope.updateGroupIndex = function (indx) {
-                $scope.currentGroupIndex = indx;
+                if ($scope.currentGroupIndex == indx)
+                    $scope.currentGroupIndex = -1;
+                else
+                    $scope.currentGroupIndex = indx;
             }
 
             $scope.chunks = ParallelsService.chunks;
