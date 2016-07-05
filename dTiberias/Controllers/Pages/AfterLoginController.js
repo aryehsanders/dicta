@@ -239,7 +239,6 @@ jTextMinerApp.controller('AfterLoginController', function ($scope, ngDialog, Exp
                 $scope.numOfParallels = 0;
                 for (k = 0; k < $scope.results.length; k = k + 1) {
                     var currentChunk = $scope.results[k];
-                    $scope.numOfParallels += parseInt(currentChunk.numParallels);
                     for (j = 0; j < currentChunk.data.length; j = j + 1) {
                         var currentData = currentChunk.data[j];
                         var paths = currentData.compName.split(":");
@@ -254,7 +253,7 @@ jTextMinerApp.controller('AfterLoginController', function ($scope, ngDialog, Exp
                         if ($scope.source[k] === path)
                             continue; // do  not add parallel of the same chunk
 
-
+                        $scope.numOfParallels += 1;
 
                         if ($scope.groupNames.indexOf(group) < 0) {
                             $scope.groupNames.push(group);
