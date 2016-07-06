@@ -43,9 +43,10 @@ jTextMinerApp.filter('numberFixedLen', function () {
 });
 
 
-jTextMinerApp.filter('removeDot', function () {
+jTextMinerApp.filter('makeValidId', function () {
     return function (text) {
         var str = text.replace('.', '');
+        str = str.replace(/ /g,'-')
         return str;
     };
 });
