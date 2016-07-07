@@ -1,11 +1,11 @@
 ﻿<div>
-    <div>
+    <!--<div>
         The morphological and syntactic data for our Biblical corpus is derived from the ETCBC4 database
         (
         <a href="http://dx.doi.org/10.17026%2Fdans-2z3-arxf">LINK</a>
         )
-    </div>
-    <input id="Select_BibleId" ng-click="OpenSelectBible();" type="radio" name="Select_OnlineCorpusGroup" ng-model="Select_OnlineCorpus" value="Bible" />
+    </div>-->
+    <!--<input id="Select_BibleId" ng-click="OpenSelectBible();" type="radio" name="Select_OnlineCorpusGroup" ng-model="Select_OnlineCorpus" value="Bible" />
     <label for="Select_BibleId">
         Bible
     </label>
@@ -16,8 +16,8 @@
     <input disabled id="Select_BibleId" ng-click="OpenSelectBible();" type="radio" name="Select_OnlineCorpusGroup" ng-model="Select_OnlineCorpus" value="Shakespeare" />
     <label for="Select_BibleId">
         Shakespeare
-    </label>
-    <button ng-hide="true" focus-on="focusMe" type="button"
+    </label>-->
+    <!--<button ng-hide="true" focus-on="focusMe" type="button"
             class="btn btn-success padding_5"
             ng-dialog="partials/Dialogs/partial-Bible.html"
             ng-dialog-controller="BibleDialogController"
@@ -25,13 +25,13 @@
             ng-dialog-class="ngdialog-theme-default"
             ng-dialog-show-close="true">
         Bible
-    </button>
+    </button>-->
     <br />
     <div ng-show="showBibleDialog" style="height: 400px; overflow: scroll;">
         <!-- http://wwwendt.de/tech/dynatree/doc/dynatree-doc.html -->
         <div id="trainTree"></div>
     </div>
-    <div ng-show="showTalmudDialog" style="height: 400px; overflow: scroll;">
+    <div ng-show="showTalmudDialog" style="height: 400px; overflow-y: scroll;">
         <ol class="breadcrumb">
             <li ng-repeat="crumb in breadCrumbs"><a ng-click="selectCrumb($index)">{{crumb}}</a></li>
         </ol>

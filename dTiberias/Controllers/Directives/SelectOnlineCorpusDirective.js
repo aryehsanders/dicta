@@ -5,12 +5,12 @@
         controller: ['$scope', '$http', function ($scope, $http) {
             $scope.Select_OnlineCorpus = 'Bible';
 
-            $scope.showBibleDialog = true;
+            $scope.showBibleDialog = false;
             $scope.OpenSelectBible = function () {
                 $scope.showBibleDialog = true;
                 $scope.showTalmudDialog = false;
             };
-            $scope.showTalmudDialog = false;
+            $scope.showTalmudDialog = true;
             $scope.OpenSelectTalmud = function () {
                 $scope.showBibleDialog = false;
                 $scope.showTalmudDialog = true;
