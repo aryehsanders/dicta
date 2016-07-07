@@ -12,7 +12,7 @@ jTextMinerApp.controller('DlgLoginController', function ($scope, ExperimentServi
             $scope.data.userLogin = $scope.userLogin;
             APIService.apiRun({ crud: 'CheckUserLogin' }, $scope.data, function (response) {
                 if (response.userLogin.length != 0) {
-
+                    $.cookie('userLogin', $scope.userLogin);
                     AlertsService.determineAlert({ msg: 'Login success! Hi ' + $scope.userLogin + ', please choose one of the experiments below and click on "Next"', type: 'success' });
                     ExperimentService.updateUser($scope.userLogin);
                     $scope.confirm();

@@ -210,6 +210,25 @@ jTextMinerApp.controller('LoginController', function ($scope, ngDialog, Experime
             console.log('Modal promise rejected. Reason: ', reason);
         });
     }
-    
+
+
+    var cookieUsername = $.cookie('userLogin');
+    if (cookieUsername != null) {
+        $scope.userLogin = cookieUsername;
+        $scope.data = {};
+        $scope.data.userLogin = $scope.userLogin;
+        APIService.apiRun({crud: 'CheckUserLogin'}, $scope.data, function (response) {
+            if (response.userLogin.length != 0) {
+
+                AlertsService.determineAlert({
+                    msg: 'Login success! Hi ' + $scope.userLogin + ', please choose one of the experiments below and click on "Next"',
+                    type: 'success'
+                });
+                ExperimentService.updateUser($scope.userLogin);
+                $location.path('AfterLogin');
+            }
+        });
+    }
+
 });
 
