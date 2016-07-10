@@ -2,7 +2,7 @@
     return {
         restrict: 'AE',
         templateUrl: 'partials/templates/TabsSecondTab.html',
-        controller: ['$scope', '$rootScope', 'ExperimentService', '$location', 'focus', 'APIService', '$filter', 'AlertsService', 'ClassificationService', 'FeatureService', 'InProgressService', 'ClassService', 'SaveClassInterface', 'SelectClassService', '$sce', 'ngDialog', function ($scope, $rootScope, ExperimentService, $location, focus, APIService, $filter, AlertsService, ClassificationService, FeatureService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce, ngDialog) {
+        controller: ['$scope', '$rootScope', 'ExperimentService', '$location', 'focus', 'APIService', '$filter', 'AlertsService', 'ClassificationService', 'FeatureService', 'InProgressService', 'ClassService', 'SaveClassInterface', 'SelectClassService', '$sce', 'ngDialog', 'TreeService', function ($scope, $rootScope, ExperimentService, $location, focus, APIService, $filter, AlertsService, ClassificationService, FeatureService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce, ngDialog, TreeService) {
             $scope.showInProcess = InProgressService.isReady != 1;
             $scope.$on('isReady_Updated', function () {
                 $scope.showInProcess = InProgressService.isReady != 1;
@@ -19,7 +19,8 @@
                 }
                 return "Grey";
             }
-            
+
+            // someone pressed the "Add Class" button, so show the dialog
             $scope.ContinueToAddClass = function (actionMode) {
 
                 $rootScope.$broadcast('lastSelectedRootKeys', []);
@@ -41,6 +42,8 @@
                 ClassService.updateExperimentActionMode(actionMode);
                 //$scope.Next();
             }
+
+
             $scope.UpdateExtractFeaturesData = function () {
                 $scope.data = {};
                 $scope.data.userLogin = ExperimentService.user;
@@ -204,8 +207,14 @@
                             ExperimentService.tsResultData = response2;
                             $scope.TSResultData = response2;
                             $scope.testSetChunks = [];
-                            for (testFileIndex in $scope.TSResultData.testSetResults) {
-                                $scope.setSelectedTestFile($scope.TSResultData.testSetResults[testFileIndex], testFileIndex);
+                            var sortedResults = TreeService.treeSort($scope.TSResultData.testSetResults,
+                                function(item) {
+                                    return item.name.replace(/_/g,'/').replace(/.rtf$/,'');
+                                });
+                            $scope.TSResultData.testSetResults = sortedResults;
+                            ExperimentService.tsResultData.testSetResults = sortedResults;
+                            for (var testFileIndex in sortedResults) {
+                                $scope.setSelectedTestFile(sortedResults[testFileIndex], testFileIndex);
                             }
 
                         });
@@ -344,7 +353,7 @@
                     var results = response;
                     item.htmlText = results.htmlText;
                     item.featureList = results.features;
-                    $scope.testSetChunks.push(item);
+                    $scope.testSetChunks[index] = item;
 
                     $scope.legend = $sce.trustAsHtml(results.legend);
 

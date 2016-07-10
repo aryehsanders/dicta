@@ -5,5 +5,22 @@ jTextMinerApp.factory('TreeService', function ($http) {
         treeObject.corpusTree = response.data;
     });
     treeObject.keyToNode = {};
+
+    treeObject.treeSort = function(list, getKeyFunc) {
+        var nextItems = treeObject.corpusTree;
+        var sortedItems = [];
+        while (nextItems.length > 0) {
+            var currentItem = nextItems.shift();
+            if (Array.isArray(currentItem['children']))
+                nextItems = currentItem.children.concat(nextItems);
+            for(var i = list.length - 1; i >= 0; i--) {
+                if (currentItem.key == getKeyFunc(list[i])) {
+                    sortedItems.push(list[i]);
+                    list.splice(i, 1);
+                }
+            }
+        }
+        return sortedItems;
+    };
     return treeObject;
 });
