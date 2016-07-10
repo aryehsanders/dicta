@@ -2,7 +2,7 @@
     return {
         restrict: 'AE',
         templateUrl: 'partials/templates/SelectOnlineCorpusTemplate.html',
-        controller: ['$scope', '$http', function ($scope, $http) {
+        controller: ['$scope', '$http', 'TreeService', 'SelectClassService', function ($scope, $http, TreeService, SelectClassService) {
             $scope.Select_OnlineCorpus = 'Bible';
 
             $scope.showBibleDialog = false;
@@ -21,27 +21,29 @@
             }
             initBreadCrumbs();
 
-            $http.get('corpusTree.json').then(function(response) {
-                $scope.corpusTree = response.data;
+            TreeService.ready.then(function() {
+                $scope.corpusTree = TreeService.corpusTree;
                 $scope.treeNode = $scope.corpusTree;
                 initCurrentLevel(null);
             });
 
-            var keyToNode = {};
-
             // based on http://stackoverflow.com/questions/14514461/how-to-bind-to-list-of-checkbox-values-with-angularjs
             // list selected nodes by key
-            $scope.selectedNodes = [];
+            $scope.selectedNodes = SelectClassService.lastSelectedRootKeys;
+            recalculatePartials();
 
-            // to display an "indeterminate" checkbox if some key is partially selected
-            $scope.partialNodes = [];
-
+            $rootScope.$on('lastSelectedRootKeys', function (event, args) {
+                if (Array.isArray(args)) {
+                    $scope.selectedNodes = args;
+                    recalculatePartials();
+                }
+            });
 
             function initCurrentLevel(parentNode) {
                 for (var i = 0; i < $scope.treeNode.length; i++) {
                     // add links back to the parent, so we can update selections
                     $scope.treeNode[i]['parent'] = parentNode;
-                    keyToNode[$scope.treeNode[i]['key']] = $scope.treeNode[i];
+                    TreeService.keyToNode[$scope.treeNode[i]['key']] = $scope.treeNode[i];
                 }
             }
 
@@ -61,7 +63,7 @@
 
             // remove current item from array if 'ancestor' is an ancestor
             function removeIfAncestor(arr, idx, ancestor) {
-                var current = keyToNode[arr[idx]];
+                var current = TreeService.keyToNode[arr[idx]];
                 while(current['parent'] != null) {
                     if (current['parent'] === ancestor) {
                         arr.splice(idx, 1);
@@ -74,7 +76,7 @@
             function recalculatePartials() {
                 $scope.partialNodes = [];
                 for (var i=0;i< $scope.selectedNodes.length; i++) {
-                    var parent = keyToNode[$scope.selectedNodes[i]]['parent'];
+                    var parent = TreeService.keyToNode[$scope.selectedNodes[i]]['parent'];
                     while (parent != null) {
                         if ($scope.partialNodes.indexOf(parent['key']) == -1)
                             $scope.partialNodes.push(parent['key']);
@@ -84,7 +86,7 @@
             }
 
             $scope.isNodeSelected = function isNodeSelected(node) {
-                var parent = keyToNode[node]['parent'];
+                var parent = TreeService.keyToNode[node]['parent'];
                 return $scope.selectedNodes.indexOf(node) > -1 || (parent != null && isNodeSelected(parent['key']));
             };
 
@@ -104,7 +106,7 @@
                     }
                     else {
                         // select siblings and deselect ancestor
-                        var currentNode = keyToNode[itemKey];
+                        var currentNode = TreeService.keyToNode[itemKey];
                         while ((idx = $scope.selectedNodes.indexOf(currentNode['key'])) == -1) {
                             var children = currentNode['parent']['children'];
                             for (var i = 0; i < children.length; i++)
@@ -120,7 +122,7 @@
                     // select this
                     $scope.selectedNodes.push(itemKey);
                     // check if all siblings are selected
-                    var parent = keyToNode[itemKey]['parent'];
+                    var parent = TreeService.keyToNode[itemKey]['parent'];
                     if (parent != null) {
                         var sibCount = 0;
                         var siblings = parent['children'];
@@ -136,7 +138,7 @@
 
                 // remove any descendants already selected
                 for (var i = $scope.selectedNodes.length - 1; i>=0; i--)
-                    removeIfAncestor($scope.selectedNodes, i, keyToNode[itemKey]);
+                    removeIfAncestor($scope.selectedNodes, i, TreeService.keyToNode[itemKey]);
 
                 recalculatePartials();
 

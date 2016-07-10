@@ -2,7 +2,7 @@
     return {
         restrict: 'AE',
         templateUrl: 'partials/templates/TabsSecondTab.html',
-        controller: ['$scope', 'ExperimentService', '$location', 'focus', 'APIService', '$filter', 'AlertsService', 'ClassificationService', 'FeatureService', 'InProgressService', 'ClassService', 'SaveClassInterface', 'SelectClassService', '$sce', 'ngDialog', function ($scope, ExperimentService, $location, focus, APIService, $filter, AlertsService, ClassificationService, FeatureService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce, ngDialog) {
+        controller: ['$scope', '$rootScope', 'ExperimentService', '$location', 'focus', 'APIService', '$filter', 'AlertsService', 'ClassificationService', 'FeatureService', 'InProgressService', 'ClassService', 'SaveClassInterface', 'SelectClassService', '$sce', 'ngDialog', function ($scope, $rootScope, ExperimentService, $location, focus, APIService, $filter, AlertsService, ClassificationService, FeatureService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce, ngDialog) {
             $scope.showInProcess = InProgressService.isReady != 1;
             $scope.$on('isReady_Updated', function () {
                 $scope.showInProcess = InProgressService.isReady != 1;
@@ -22,6 +22,7 @@
             
             $scope.ContinueToAddClass = function (actionMode) {
 
+                $rootScope.$broadcast('lastSelectedRootKeys', []);
                 $scope.showClassDialog = true;
 
                 ClassService.updateClassName('class ' + ClassService.Corpus_maxId);
