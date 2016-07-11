@@ -20,7 +20,8 @@ jTextMinerApp.factory('TreeService', function ($http) {
                 }
             }
         }
-        return sortedItems;
+        // if there are any items left, leave them unsorted at the end
+        return sortedItems.concat(list);
     };
     return treeObject;
 });
