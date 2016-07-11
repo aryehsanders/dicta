@@ -12,8 +12,10 @@
                 </div>
 
                 <div class="box-found">
-                    <h3 ng-show="chunkSelectedIndex == -1">Found {{numOfParallels}} parallels</h3>
-                    <h3 ng-show="chunkSelectedIndex != -1">Found {{parrallelsPerChunk[chunkSelectedIndex].parallels.length}} parallels</h3>
+                    <div ng-show="chunks.length <= 800">
+                        <h3 ng-show="chunkSelectedIndex == -1">Found {{numOfParallels}} parallels</h3>
+                        <h3 ng-show="chunkSelectedIndex != -1">Found {{parrallelsPerChunk[chunkSelectedIndex].parallels.length}} parallels</h3>
+                    </div>
 
                     <div ng-show="false" class="box-fexo">
                         <ul>
