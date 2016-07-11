@@ -24,7 +24,7 @@
             $scope.ContinueToAddClass = function (actionMode) {
 
                 $rootScope.$broadcast('lastSelectedRootKeys', []);
-                $scope.showClassDialog = true;
+                $scope.showAddClassDialog = true;
 
                 ClassService.updateClassName('class ' + ClassService.Corpus_maxId);
 
@@ -83,11 +83,12 @@
             // Bible
             $scope.cancelClass = function () {
                 $scope.showClassDialog = false;
-
+                $scope.showAddClassDialog = false;
             }
 
             $scope.saveClass = function () {
                 $scope.showClassDialog = false;
+                $scope.showAddClassDialog = false;
                 ExperimentService.updateExperimentTypeModelValue('Classification');
                 var classData = SaveClassInterface; // {};
                 
