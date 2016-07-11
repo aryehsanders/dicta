@@ -237,7 +237,7 @@ jTextMinerApp.controller('AfterLoginController', function ($scope, ngDialog, Exp
 
             $scope.data.minthreshold = 6;
             $scope.data.maxdistance = 2;
-            if ($scope.data.chunks.length > 300) {
+            if ($scope.data.chunks.length > 800) {
                 InProgressService.updateIsReady(1);
                 $location.path('Tabs');
             }
