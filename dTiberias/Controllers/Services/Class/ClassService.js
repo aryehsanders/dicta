@@ -2,13 +2,18 @@
     var service = {};
 
     service.colors = ["Red", "Green", "Blue", "FFFF00", "FF00FF", "00FFFF", "Gray"];
+    service.ExperimentTestSetActionMode = 'SelectOnlineCorpus';//'BrowseThisComputer';
     service.ExperimentActionMode = 'SelectOnlineCorpus';//'BrowseThisComputer';
     service.updateExperimentActionMode = function (value) {
         this.ExperimentActionMode = value;
         SegmentationService.updateSegmentation_ActionModeValue(value);
         $rootScope.$broadcast("ExperimentActionModeValuesUpdated");
     }
-
+    service.updateExperimentTestSetActionMode = function (value) {
+        this.ExperimentTestSetActionMode = value;
+        SegmentationService.updateSegmentation_ActionModeValue(value);
+        $rootScope.$broadcast("ExperimentTestSetActionModeValuesUpdated");
+    }
 
     service.TestSet_unknown_class = [{
         id: "1",

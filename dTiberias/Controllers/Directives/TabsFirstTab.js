@@ -60,7 +60,28 @@
                 }
                 return $sce.trustAsHtml(chunk);
             }
-            
+
+            $scope.parallelFilter = function (item) {
+                if ($scope.currentGroupIndex == -1)
+                    return true;
+                else
+                {
+                    $scope.currentGroup = $scope.groups[$scope.currentGroupIndex];
+                    for (i = 0; i < $scope.currentGroup.parallels.length; i = i + 1) {
+                        $scope.currentParallel = $scope.currentGroup.parallels[i];
+                        for (j = 0; j < $scope.chunks.length; j = j + 1) {
+                            if(item == $scope.chunks[j])
+                            {
+                                if ($scope.currentParallel.chunkIndex == j)
+                                    return true;
+                            }
+                        }
+
+                        
+                    }
+                }
+                return false;
+            };
 
         }]
     };

@@ -88,18 +88,20 @@ jTextMinerApp.controller('AfterLoginController', function ($scope, ngDialog, Exp
 
                     //ExperimentService.ExperimentName += ' ' + $scope.formatedDate;
                     $scope.data.expName = ExperimentService.ExperimentName;
-
+                    
+                    
                     APIService.apiRun({ crud: 'NewExperiment' }, $scope.data, function (response) {
                         InProgressService.updateIsReady(1);
 
                         if (response.userLogin.length != 0) {
                             AlertsService.determineAlert({ msg: 'NewExperiment', type: 'success' });
-                            //$location.path($scope.ExperimentTypeModel);
+                        //$location.path($scope.ExperimentTypeModel);
                             $scope.GoToNextTab();
                         }
                         else
-                            AlertsService.determineAlert({ msg: 'There is such exp name', type: 'success' });
+                                AlertsService.determineAlert({ msg: 'There is such exp name', type: 'success' });
                     });
+                     
                 }
                 else {
                     ExperimentService.updateStoredExperimentName($scope.LoadPreviousResults);
@@ -212,6 +214,7 @@ jTextMinerApp.controller('AfterLoginController', function ($scope, ngDialog, Exp
         $scope.source = [];
         //UnknownTestClass
         var classData = SaveClassInterface; // {};
+        ClassService.updateExperimentTestSetActionMode(classData.actionMode);
         InProgressService.updateIsReady(0);
         if (angular.equals(classData.actionMode, 'SelectOnlineCorpus')) {
             classData.select_RootKeys = SelectClassService.lastTestSetSelectedRootKeys;
@@ -231,74 +234,84 @@ jTextMinerApp.controller('AfterLoginController', function ($scope, ngDialog, Exp
                     }
                 );
             }
-            CAPIService.apiRun({ crud: 'parallels' }, $scope.data, function (response2) {
-                $scope.results = response2;
-                $scope.groupNames = [];
-                $scope.groups = [];
-                $scope.numOfParallelsInGroups = [];
-                $scope.numOfParallels = 0;
-                for (k = 0; k < $scope.results.length; k = k + 1) {
-                    var currentChunk = $scope.results[k];
-                    for (j = 0; j < currentChunk.data.length; j = j + 1) {
-                        var currentData = currentChunk.data[j];
-                        var paths = currentData.compName.split(":");
-                        var group = (paths[0] + " > " + paths[1]);
-                        var title = paths[0];
-                        var path = paths[0];
-                        for (i = 1; i < paths.length; i = i + 1) {
-                            title += " > " + paths[i];
-                            path += "/" + paths[i].trim();
-                        }
 
-                        if ($scope.source[k] === path)
-                            continue; // do  not add parallel of the same chunk
+            $scope.data.minthreshold = 6;
+            $scope.data.maxdistance = 2;
+            if ($scope.data.chunks.length > 300) {
+                InProgressService.updateIsReady(1);
+                $location.path('Tabs');
+            }
+            else
+            {
+                CAPIService.apiRun({ crud: 'parallels' }, $scope.data, function (response2) {
+                    $scope.results = response2;
+                    $scope.groupNames = [];
+                    $scope.groups = [];
+                    $scope.numOfParallelsInGroups = [];
+                    $scope.numOfParallels = 0;
+                    for (k = 0; k < $scope.results.length; k = k + 1) {
+                        var currentChunk = $scope.results[k];
+                        for (j = 0; j < currentChunk.data.length; j = j + 1) {
+                            var currentData = currentChunk.data[j];
+                            var paths = currentData.compName.split(":");
+                            var group = (paths[0] + " > " + paths[1]);
+                            var title = paths[0];
+                            var path = paths[0];
+                            for (i = 1; i < paths.length; i = i + 1) {
+                                title += " > " + paths[i];
+                                path += "/" + paths[i].trim();
+                            }
 
-                        $scope.numOfParallels += 1;
+                            if ($scope.source[k] === path)
+                                continue; // do  not add parallel of the same chunk
 
-                        if ($scope.groupNames.indexOf(group) < 0) {
-                            $scope.groupNames.push(group);
-                            $scope.groups.push({
-                                name: group,
-                                numOfParallels: 1,
-                                parallels: []
-                            });
-                        }
-                        else {
-                            $scope.groups[$scope.groupNames.indexOf(group)].numOfParallels += 1;
-                        }
+                            $scope.numOfParallels += 1;
+
+                            if ($scope.groupNames.indexOf(group) < 0) {
+                                $scope.groupNames.push(group);
+                                $scope.groups.push({
+                                    name: group,
+                                    numOfParallels: 1,
+                                    parallels: []
+                                });
+                            }
+                            else {
+                                $scope.groups[$scope.groupNames.indexOf(group)].numOfParallels += 1;
+                            }
                         
-                        $scope.groups[$scope.groupNames.indexOf(group)].parallels.push({
-                            chunkIndex: k,
-                            chunkText: currentData.baseMatchedText,
-                            parallelText: currentData.compMatchedText,
-                            parallelTitle: title,
-                            parallelPath: path,
-                            //startCharecterIndex: currentData.baseStartChar,
-                            //length: currentData.baseTextLength
-                        });
-                        
-                        $scope.parrallelsPerChunk[k].parallels.push(
-                            {
+                            $scope.groups[$scope.groupNames.indexOf(group)].parallels.push({
                                 chunkIndex: k,
                                 chunkText: currentData.baseMatchedText,
                                 parallelText: currentData.compMatchedText,
                                 parallelTitle: title,
                                 parallelPath: path,
-                            }
-                        );
+                                //startCharecterIndex: currentData.baseStartChar,
+                                //length: currentData.baseTextLength
+                            });
+                        
+                            $scope.parrallelsPerChunk[k].parallels.push(
+                                {
+                                    chunkIndex: k,
+                                    chunkText: currentData.baseMatchedText,
+                                    parallelText: currentData.compMatchedText,
+                                    parallelTitle: title,
+                                    parallelPath: path,
+                                }
+                            );
 
+                        }
                     }
-                }
 
-                ParallelsService.updategroupNames($scope.groupNames);
-                ParallelsService.updategroups($scope.groups);
-                ParallelsService.updatenumOfParallelsInGroups($scope.numOfParallelsInGroups);
-                ParallelsService.updatenumOfParallels($scope.numOfParallels);
-                ParallelsService.updateparrallelsPerChunk($scope.parrallelsPerChunk);
+                    ParallelsService.updategroupNames($scope.groupNames);
+                    ParallelsService.updategroups($scope.groups);
+                    ParallelsService.updatenumOfParallelsInGroups($scope.numOfParallelsInGroups);
+                    ParallelsService.updatenumOfParallels($scope.numOfParallels);
+                    ParallelsService.updateparrallelsPerChunk($scope.parrallelsPerChunk);
 
-                InProgressService.updateIsReady(1);
-                $location.path('Tabs');
-            });
+                    InProgressService.updateIsReady(1);
+                    $location.path('Tabs');
+                });
+            }
         });
         
     }

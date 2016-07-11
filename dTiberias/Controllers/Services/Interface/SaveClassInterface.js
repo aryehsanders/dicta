@@ -1,6 +1,10 @@
 ﻿jTextMinerApp.factory('SaveClassInterface', function ($rootScope, BrowseClassService, SelectClassService, ClassService, ExperimentService) {
     var classData = {};
 
+    classData.testSetActionMode = 'SelectOnlineCorpus';
+    $rootScope.$on('ExperimentTestSetActionModeValuesUpdated', function () {
+        classData.testSetActionMode = ClassService.ExperimentTestSetActionMode;
+    });
     classData.actionMode = ClassService.ExperimentActionMode;
     $rootScope.$on('ExperimentActionModeValuesUpdated', function () {
         classData.actionMode = ClassService.ExperimentActionMode;
