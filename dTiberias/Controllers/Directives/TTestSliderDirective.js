@@ -20,7 +20,7 @@ jTextMinerApp.directive('ttestSlider', function ($timeout) {
             
         },
         controller: ['$scope', 'ExperimentService', 'APIService', 'FeatureService', 'ClassService', 'InProgressService', function ($scope, ExperimentService, APIService, FeatureService, ClassService, InProgressService) {
-            $scope.tTestScale = 4;
+            $scope.tTestScale = 10;
             $scope.boundClass = function (ttest) {
                 if (ttest >= $scope.tTestScale)
                     return $scope.tTestScale;

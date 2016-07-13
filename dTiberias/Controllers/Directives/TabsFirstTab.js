@@ -35,6 +35,7 @@
 
             $scope.markParallels = function (chunk) {
                 $scope.currentGroup = $scope.groups[$scope.currentGroupIndex];
+                if ($scope.currentGroup== null  || $scope.currentGroup['parallels'] == null) return $sce.trustAsHtml(chunk);
                 for (i = 0; i < $scope.currentGroup.parallels.length; i = i + 1) {
                     $scope.currentParallel = $scope.currentGroup.parallels[i];
                     chunk = chunk.replace($scope.currentParallel.chunkText, "<span style='background-color:#FFFEA4;'>" + $scope.currentParallel.chunkText + "</span>");
@@ -67,6 +68,7 @@
                 else
                 {
                     $scope.currentGroup = $scope.groups[$scope.currentGroupIndex];
+                    if ($scope.currentGroup== null  || $scope.currentGroup['parallels'] == null) return true;
                     for (i = 0; i < $scope.currentGroup.parallels.length; i = i + 1) {
                         $scope.currentParallel = $scope.currentGroup.parallels[i];
                         for (j = 0; j < $scope.chunks.length; j = j + 1) {

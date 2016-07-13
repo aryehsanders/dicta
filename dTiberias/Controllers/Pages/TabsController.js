@@ -1,5 +1,5 @@
 ﻿// create the controller and inject Angular's $scope
-jTextMinerApp.controller('TabsController', function ($scope, ClassService) {
+jTextMinerApp.controller('TabsController', function ($scope, ClassService, $rootScope, SelectClassService) {
 
     $scope.goToFirstTab = function ()
     {
@@ -23,6 +23,7 @@ jTextMinerApp.controller('TabsController', function ($scope, ClassService) {
 
     $scope.editTestSet = function () {
         $scope.showClassDialog = true;
+        $rootScope.$broadcast('lastSelectedRootKeys',SelectClassService.lastTestSetSelectedRootKeys);
 
         /*
         $scope.ExperimentMode = 'NewExperiment';

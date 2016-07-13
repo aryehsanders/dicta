@@ -1,7 +1,7 @@
 ﻿
 <input id="{{featureId}}" type="text" 
        data-slider-min="0"
-       data-slider-max="4"
+       data-slider-max="10"
        data-slider-enabled="false"
        data-slider-reversed="false" 
        data-slider-precision="2"
@@ -10,7 +10,7 @@
        data-slider-id="{{classcolor}}"
        data-slider-ticks="[{{boundOthers(ttest)}}, {{boundCurrentValue(classaverage, otheraverage, currentvalue, ttest)}}, {{boundClass(ttest)}}]"
        data-slider-ticks-labels='["{{otheraverage}}", "{{currentvalue}}", "{{classaverage}}"]'
-       data-slider-ticks-positions="[{{boundOthers(ttest)*25}}, {{boundCurrentValue(classaverage, otheraverage, currentvalue, ttest)*25}}, {{boundClass(ttest)*25}}]"
+       data-slider-ticks-positions="[{{boundOthers(ttest)*10}}, {{boundCurrentValue(classaverage, otheraverage, currentvalue, ttest)*10}}, {{boundClass(ttest)*10}}]"
        />
 
 <div ng-show="false">
