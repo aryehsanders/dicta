@@ -5,13 +5,13 @@
 
     <div ng-repeat="item in classes" id="{{item.id}}" class="box-fexo">
         <div class="left-icons">
-            <img src='import/secondTab/images/point{{$index}}.png' />
+            <img src='images/secondTab/point{{$index}}.png' />
         </div>
         <div class="right-content">
             <h2>
                 <span  title="{{item.selectedText | limitTo: 1200}}..." class="align-left color-black">{{item.title}}</span>
                 <span class="align-right">
-                    <a ng-show="showDeleteButton" ng-click="DeleteClass($index);"><img src="import/secondTab/images/delete.png"></a>
+                    <a ng-show="showDeleteButton" ng-click="DeleteClass($index);"><img src="images/secondTab/delete.png"></a>
                 </span>
             </h2>
             <h2><span class="align-left small-details">{{item.numberOfChunks}} 
@@ -21,7 +21,7 @@
                     <i ng-show="item.chunkMode=='By chapter'">chapters </i>
 
                 <b>|</b>  {{item.totalNumberOfWords/item.numberOfChunks | number: 0}} words (avg.)</span>
-            <span class="align-right"><a ng-click="UpdateClass($index);"><img src="import/secondTab/images/edit.png"></a></span></h2>
+            <span class="align-right"><a ng-click="UpdateClass($index);"><img src="images/secondTab/edit.png"></a></span></h2>
         </div>
 
     </div>

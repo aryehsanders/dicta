@@ -55,43 +55,6 @@ jTextMinerApp.controller('ClassDialogController', function ($scope, ngDialog, Ex
     $scope.data.userLogin = ExperimentService.user;
     $scope.data.expType = ExperimentService.ExperimentTypeModel;
 
-    // http://wwwendt.de/tech/dynatree/doc/dynatree-doc.html 
-    $("#classTree").dynatree({
-        checkbox: false,
-        selectMode: 3,
-        //children: classTreeData,
-        onSelect: function (select, node) {
-            // Get a list of all selected TOP nodes
-            var selRootNodes = node.tree.getSelectedNodes(true);
-            // Get a list of ALL selected nodes
-            selRootNodes = node.tree.getSelectedNodes(false);
-
-            // ... and convert to a key array:
-            var selRootKeys = $.map(selRootNodes, function (node) {
-                return node.data.key;
-            });
-
-        },
-        onDblClick: function (node, event) {
-            node.toggleSelect();
-        },
-        onKeydown: function (node, event) {
-            if (event.which == 32) {
-                node.toggleSelect();
-                return false;
-            }
-        },
-        initAjax: {
-            url: ExperimentService.baseUrl + "/GetStoredClasses",
-            data: $scope.data
-        },
-        autoFocus: true, // Set focus to first child, when expanding or lazy-loading.
-        // The following options are only required, if we have more than one tree on one page:
-        //initId: "classTreeData",
-        cookieId: "dynatree-Cc",
-        idPrefix: "dynatree-Cc-"
-    });
-
     $scope.inited = true;
 
 });

@@ -4,7 +4,7 @@
 //https://www.pointblankdevelopment.com.au/blog/angularjs-fixed-header-scrollable-table-directive
 
 
-var jTextMinerApp = angular.module('JTextMinerApp', ['ui.router', 'ngResource', 'anguFixedHeaderTable', 'ui.bootstrap', 'ngDialog', 'ui.tree', 'integralui', 'ivh.treeview', 'treeModule', 'ui.bootstrap.tabs', 'ui.indeterminate']);//, 'angularCharts']);
+var jTextMinerApp = angular.module('JTextMinerApp', ['ui.router', 'ngResource', 'anguFixedHeaderTable', 'ui.bootstrap', 'ngDialog', 'ui.bootstrap.tabs', 'ui.indeterminate']);//, 'angularCharts']);
 // Example of how to set default values for all dialogs
 jTextMinerApp.config(['ngDialogProvider', function (ngDialogProvider) {
     ngDialogProvider.setDefaults({
@@ -19,12 +19,7 @@ jTextMinerApp.config(['ngDialogProvider', function (ngDialogProvider) {
         }
     });
 }]);
-jTextMinerApp.config(function (ivhTreeviewOptionsProvider) {
-    ivhTreeviewOptionsProvider.set({
-        defaultSelectedState: false,
-        validate: true
-    });
-});
+
 jTextMinerApp.config(function ($stateProvider, $urlRouterProvider) {
 
     $urlRouterProvider.otherwise('/Login');
@@ -50,21 +45,6 @@ jTextMinerApp.config(function ($stateProvider, $urlRouterProvider) {
         controller: 'ExperimentController',
         templateUrl: 'partials/Pages/partial-Experiment.html'
     })
-    .state('FirstTab', {
-        url: '/FirstTab',
-        controller: 'FirstTabController',
-        templateUrl: 'partials/Pages/partial-FirstTab.html'
-    })
-    .state('SecondTab', {
-        url: '/SecondTab',
-        controller: 'SecondTabController',
-        templateUrl: 'partials/Pages/partial-SecondTab.html'
-    })
-    .state('ThirdTab', {
-        url: '/ThirdTab',
-        controller: 'ThirdTabController',
-        templateUrl: 'partials/Pages/partial-ThirdTab.html'
-    })
     .state('TestSet', {
         url: '/TestSet',
         controller: 'TestSetController',
@@ -80,7 +60,6 @@ jTextMinerApp.config(function ($stateProvider, $urlRouterProvider) {
         controller: 'UnmaskingController',
         templateUrl: 'partials/Pages/partial-Unmasking.html'
     })
-    
     .state('ResultsSegmentation', {
         url: '/ResultsSegmentation',
         controller: 'ResultsSegmentationController',
