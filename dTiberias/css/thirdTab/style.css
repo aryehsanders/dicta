@@ -4,12 +4,12 @@ body,ul,li,a,p,h2,h3,h4,span {
 }
 
 @font-face { 
-	src : url(fonts/MyriadPro-Regular.otf);
+	src : url(../../fonts/MyriadPro-Regular.otf);
 	font-family:MyriadPro;
 }
 
 @font-face { 
-	src : url(fonts/ChaparralPro-Regular.otf);
+	src : url(../../fonts/ChaparralPro-Regular.otf);
 	font-family:ChaparralPro;
 }
 
@@ -1107,7 +1107,7 @@ b.active i {
 }
 
 .border-author{
-    min-height: 614px;
+    min-height: 314px;
     float: left;
     padding-bottom: 11px;
         background: #F2F2F2;
