@@ -4,6 +4,7 @@
         templateUrl: 'partials/templates/TabsThirdTab.html',
         controller: ['$scope', 'ExperimentService', '$location', 'focus', 'APIService', '$filter', 'AlertsService', 'SegmentationService', 'FeatureService', 'InProgressService', 'ClassService', 'SaveClassInterface', 'SelectClassService', '$sce', 'ngDialog', function ($scope, ExperimentService, $location, focus, APIService, $filter, AlertsService, SegmentationService, FeatureService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce, ngDialog) {
 
+            $scope.tab = 1;
             $scope.showInProcess = InProgressService.isReady != 1;
             $scope.$on('isReady_Updated', function () {
                 $scope.showInProcess = InProgressService.isReady != 1;
@@ -145,6 +146,7 @@
                         InProgressService.updateIsReady(1);
                         var results = response;
                         $scope.resultData = results;
+                        FeatureService.updateFeaturesData(results.featuresData);
                     });
 
                 });

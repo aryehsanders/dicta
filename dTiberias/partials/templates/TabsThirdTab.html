@@ -47,19 +47,35 @@ $(document).ready(function () {
     </div>
 
     <in-progress></in-progress>
+
     <div class="col-md-8">
-        <div ng-show="resultData.htmlSegmentation" class="box-right-side">
-            <div class="border-box">
-                <h2><span class="align-left">Selected text</span><span class="align-right">?</span></h2>
-                <p class="line-h">
+        <div class="box-right-side">
+            <div class="view-text" ng-show="resultData.htmlSegmentation">
+                <ul class="list-inline">
+                    <li ng-class=" tab == '1' ? 'active' : ''"><a ng-click="tab = 1">View text</a></li>
+                    <li><a>|</a></li>
+                    <li ng-class=" tab == '2' ? 'active' : ''"><a ng-click="tab = 2">View features</a></li>
+                </ul>
+            </div>
+
+            <div class="clearfix"></div>
+
+        </div>
+    </div>
+    <div ng-show="tab == '1'">
+        <div class="col-md-8">
+            <div ng-show="resultData.htmlSegmentation" class="box-right-side">
+                <div class="border-box">
+                    <h2><span class="align-left">Selected text</span><span class="align-right">?</span></h2>
+                    <p class="line-h">
                     <div dir="rtl" ng-bind-html="htmlSegmentation"></div>
-                </p>
+                    </p>
+                </div>
             </div>
         </div>
-
-                           
     </div>
-
-
-
-
+    <div ng-show="tab =='2'">
+        <div class="col-md-12">
+            <feature-table is-select-disabled="true"></feature-table>
+        </div>
+    </div>
