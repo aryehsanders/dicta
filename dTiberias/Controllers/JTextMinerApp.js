@@ -25,11 +25,6 @@ jTextMinerApp.config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/Login');
 
     $stateProvider
-    .state('Bible', {
-        url: '/Bible',
-        controller: 'BibleController',
-        templateUrl: 'partials/Pages/partial-Bible.html'
-    })
     .state('Login', {
         url: '/Login',
         controller: 'LoginController',
@@ -40,40 +35,10 @@ jTextMinerApp.config(function ($stateProvider, $urlRouterProvider) {
         controller: 'AfterLoginController',
         templateUrl: 'partials/Pages/partial-AfterLogin.html'
     })
-    .state('Experiment', {
-        url: '/Experiment',
-        controller: 'ExperimentController',
-        templateUrl: 'partials/Pages/partial-Experiment.html'
-    })
-    .state('TestSet', {
-        url: '/TestSet',
-        controller: 'TestSetController',
-        templateUrl: 'partials/Pages/partial-TestSet.html'
-    })
-    .state('Segmentation', {
-        url: '/Segmentation',
-        controller: 'SegmentationController',
-        templateUrl: 'partials/Pages/partial-Segmentation.html'
-    })
     .state('Unmasking', {
         url: '/Unmasking',
         controller: 'UnmaskingController',
         templateUrl: 'partials/Pages/partial-Unmasking.html'
-    })
-    .state('ResultsSegmentation', {
-        url: '/ResultsSegmentation',
-        controller: 'ResultsSegmentationController',
-        templateUrl: 'partials/Pages/partial-ResultsSegmentation.html'
-    })
-    .state('ResultsClassificationCrossValidation', {
-        url: '/ResultsClassificationCrossValidation',
-        controller: 'ResultsClassificationCrossValidationController',
-        templateUrl: 'partials/Pages/partial-ResultsClassificationCrossValidation.html'
-    })
-    .state('ResultsClassificationTestSet', {
-        url: '/ResultsClassificationTestSet',
-        controller: 'ResultsClassificationTestSetController',
-        templateUrl: 'partials/Pages/partial-ResultsClassificationTestSet.html'
     })
     .state('Tabs', {
         url: '/Tabs',
