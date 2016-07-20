@@ -7,7 +7,7 @@ jTextMinerApp.factory('TreeService', function ($http) {
     treeObject.keyToNode = {};
 
     treeObject.treeSort = function(list, getKeyFunc) {
-        var nextItems = treeObject.corpusTree;
+        var nextItems = treeObject.corpusTree.slice(); // copies the array
         var sortedItems = [];
         while (nextItems.length > 0) {
             var currentItem = nextItems.shift();

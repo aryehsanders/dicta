@@ -24,12 +24,13 @@ jTextMinerApp.controller('FeatureSetDialogController', function ($scope, ngDialo
     $scope.$watch('resultData', function () {
         if (!angular.isUndefined($scope.resultData)) {
             ExperimentService.updateResultData($scope.resultData);
-            if ($scope.resultData.length != []) {
-                if (ExperimentService.ExperimentTypeModel == 'Unmasking')
-                    $location.path('Chart');
-                else //https://docs.angularjs.org/guide/$location
-                    $location.path('Results');
-            }
+            // seems to be from a previous design
+            // if ($scope.resultData.length != []) {
+            //     if (ExperimentService.ExperimentTypeModel == 'Unmasking')
+            //         $location.path('Chart');
+            //     else //https://docs.angularjs.org/guide/$location
+            //         $location.path('Results');
+            // }
         }
     });
 

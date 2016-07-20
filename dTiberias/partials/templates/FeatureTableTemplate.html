@@ -1,9 +1,9 @@
 ﻿
-<table class="mytable" fixed-header>
+<table class="mytable">
     <thead>
         <tr>
             <th>Index</th>
-            <th>Selected</th>
+            <th ng-if="!isSelectDisabled">Selected</th>
             <th>
                 <a href="" ng-click="predicate = 'name'; reverse=!reverse;">
                     <span ng-show="isMoreDetails">Name</span>
@@ -73,7 +73,7 @@
     <tbody>
         <tr ng-repeat="item in featuresData.features | orderBy:predicate:reverse | filter:maxTTestFilter"  class="{{item.color}}">
             <td><span class="font_12">{{$index+1}}</span></td>
-            <td><input ng-disabled="{{isSelectDisabled}}" ng-click="updateTotalNumberOfFeatures(item);" type="checkbox" ng-model="item.selected" /></td>
+            <td ng-if="!isSelectDisabled"><input ng-disabled="{{isSelectDisabled}}" ng-click="updateTotalNumberOfFeatures(item);" type="checkbox" ng-model="item.selected" /></td>
             <td><span title="{{item.title}}" >{{item.name}}</span></td>
             <td>{{item.average | number : 2}}</td>
 
